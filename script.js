@@ -6,16 +6,3 @@ window.onscroll = function() {
         header.classList.remove("show");
     }
 };
-
-
-if (window.innerWidth < 700) {
-    const servicesElements = document.querySelectorAll(".service");
-    servicesElements.forEach(element => {
-        element.style.placeSelf = "center";
-    });
-} else {
-    const servicesElements = document.querySelectorAll(".service");
-    servicesElements.forEach(element => {
-        element.style.removeProperty('place-self');
-    });
-}
