@@ -51,18 +51,19 @@ header.show {
     padding: 20px;
     background-color: #f4f4f4;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-    gap: 5px;   
+    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+    gap: 16px;   
     width: viewport;
-    justify-content: center; 
-    align-items: center;
+
+    
 }
 .service {
+    min-width: 300px;
+    min-height: calc(min-width * 9/6);
     max-width: 400px;
-    max-height: calc(400px * 9/6);
+    max-height: calc(max-height * 9/6);
     margin: 20px;
     aspect-ratio: 9/6;
-    padding: 20px;
     border: 1px solid #ccc;
     border-radius: 10px;
     text-align: left;
