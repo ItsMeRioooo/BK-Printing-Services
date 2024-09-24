@@ -5,11 +5,14 @@ import sqlite3 from 'sqlite3';
 
 const app = express();
 
+
 app.use(express.urlencoded())
 const dbPromise = open({
     filename: 'data.db',
     driver: sqlite3.Database
 });
+
+app.use(express.static('public'));
 
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');

@@ -1,10 +1,10 @@
-<h1>home template</h1>
+{{!-- <h1>home template</h1>
 
 <ul>
     {{#each messages}}  
         <li>{{service_name }}: {{service_description}}</li>
     {{/each}}
-</ul>
+</ul> --}}
 
 <header id="scrollHeader">
 	<div class="logo">
@@ -20,7 +20,12 @@
 <div class="content">
 	<div class="banner"></div>
 	<div class="servicesContainer">
-	    <div class="service"></div>
+		{{#each messages}}
+	    <div class="service">
+			{{service_name}}
+			{{service_description}}
+		</div>
+		{{/each}}
 	</div>
 </div>
-	<script src="/js/script.js"></script>
+	<script src="js/script.js"></script>
