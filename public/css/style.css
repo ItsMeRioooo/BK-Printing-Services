@@ -9,7 +9,7 @@ header {
     top: 0;
     left: 0;
     right: 0;
-    background-image: url("img/title_bg.jpg");
+    background-image: url("../img/title_bg.jpg");
     text-align: center;
     padding: 0px 10px 10px 10px;
     transform: translateY(-100%);
