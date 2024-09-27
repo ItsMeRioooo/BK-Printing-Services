@@ -12,19 +12,16 @@ header {
     background-image: url("../img/title_bg.jpg");
     text-align: center;
     padding: 0px 10px 10px 10px;
-    transform: translateY(-100%);
+    transform: translateY(-50%);
     transition: transform 0.2s ease-in-out;
     z-index: 1000;
-    
 }
-header div h1 {
+
+.logoSide  {
     font-size: 70px;
     height: 60px;
     width: 60px;
     margin: 0px 40px 0px 0px;
-}
-header div div h2 {
-    margin: 3%;
 }
 
 .logo {
@@ -38,15 +35,14 @@ header div div h2 {
 .logoStack {
     margin: 5px 0px 0px 0px;
 }
-
-header.show {
-    transform: translate(0);
+.logoStack h2 {
+    margin: 3%;
 }
-
 
 .banner {
     background-image: url("img/banner.jpg");
 }
+
 .servicesContainer {
     padding: 20px;
     background-color: #f4f4f4;
@@ -54,8 +50,6 @@ header.show {
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 16px 16px;   
     width: viewport;
-
-    
 }
 .service {
     /* min-width: 310px;
