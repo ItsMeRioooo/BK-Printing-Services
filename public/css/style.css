@@ -2,6 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    background-color: #f4f4f4
 }
 
 header {
@@ -15,6 +16,12 @@ header {
     transform: translateY(-50%);
     transition: transform 0.2s ease-in-out;
     z-index: 1000;
+}
+
+.content {
+    
+    margin-top: 70px
+
 }
 
 .logoSide  {
@@ -48,7 +55,7 @@ header {
     background-color: #f4f4f4;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 16px 16px;   
+    gap: 16px 16px;
     width: viewport;
 }
 .service {
