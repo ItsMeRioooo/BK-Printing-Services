@@ -20,9 +20,9 @@ app.set('views', './views');
 
 app.get('/', async (req, res) => {
     const db = await dbPromise;
-    const messages = await db.all('SELECT * FROM Services');
+    const services = await db.all('SELECT * FROM Services');
     res.render('home', {
-        messages
+        services
     });
 });
 
