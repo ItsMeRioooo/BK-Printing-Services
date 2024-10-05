@@ -3,13 +3,13 @@ CREATE TABLE Services (
     service_name STRING,
     service_description STRING,
     service_price DECIMAL(10, 2),
-    service_img BLOB
+    service_img STRING
 );
 CREATE TABLE Users (
     user_name STRING,
     user_email STRING,
     user_password STRING,
-    user_role STRING
+    user_perms STRING
 );
 CREATE TABLE Orders (
     order_id INT,

@@ -1,12 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin page</title>
-</head>
-<body>
-  <h1>Admin</h1>
-  <a href="/">Go back to Home Page</a>
-</body>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Admin page</title>
+		<link rel="stylesheet" href="css/style.css"/>
+		<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+	</head>
+	<body>
+		<h1>Admin</h1>
+		<a href="/">Go back to Home Page</a>
+		<i class='bx bx-edit-alt'></i>
+
+		<div class="content"></div>
+			<div class="banner"></div>
+			<div class="services_container">
+				{{#each services}}
+				<div class="service">
+					<img src="img/sample.jpg" alt="img/sample.jpg" class="service_image">
+					<p class="service_name">{{service_name}}</p>
+					<p class="service_description">{{service_description}}<p>
+					<i class='bx bx-edit-alt'></i>
+				</div>
+				{{/each}}
+			</div>
+		</div>
+	</body>
 </html>

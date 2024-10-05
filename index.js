@@ -28,7 +28,11 @@ app.get('/', async (req, res) => {
     });
 });
 app.get('/admin', async (req, res) => {
-    res.render('admin');
+    const db = await dbPromise;
+    const services = await db.all('SELECT * FROM Services');
+    res.render('admin', {
+        services
+    });
 });
 app.get('/orders', async (req, res) => {
     res.render('orders');
