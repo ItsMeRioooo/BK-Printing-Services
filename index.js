@@ -18,6 +18,8 @@ app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.set('views', './views');
 
+
+
 app.get('/', async (req, res) => {
     const db = await dbPromise;
     const services = await db.all('SELECT * FROM Services');
@@ -25,6 +27,13 @@ app.get('/', async (req, res) => {
         services
     });
 });
+app.get('/admin', async (req, res) => {
+    res.render('admin');
+});
+app.get('/orders', async (req, res) => {
+    res.render('orders');
+});
+
 
 const setup = async () => {
     const db = await dbPromise;
