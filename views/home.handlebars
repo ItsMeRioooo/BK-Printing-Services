@@ -13,12 +13,22 @@
 	<div class="banner"></div>
 	<div class="services_container">
 		{{#each services}}
-	    <div class="service">
+	    <div class="service" onclick="openPanel('{{this.service_name}}', '{{this.service_description}}')">
 			<img src="img/sample.jpg" alt="img/sample.jpg" class="service_image">
-			<p class="service_name">{{service_name}}</p>
-			<p class="service_description">{{service_description}}<p>
+			<p class="service_name">{{this.service_name}}</p>
+			<p class="service_description">{{this.service_description}}<p>
 		</div>
 		{{/each}}
+	</div>
+
+	<div id="servicePanel" class="panel">
+		<div class="panel_content">
+			<div class="close_btn">
+				<i class='bx bx-x-circle' onclick="closePanel()"></i>
+			</div>
+			<h3 id="panelServiceName"></h3>
+			<p id="panelServiceDescription"></p>
+		</div>
 	</div>
 </div>
 	<script src="js/script.js"></script>

@@ -83,6 +83,32 @@ header {
     margin: 0px 0px 0px 5px;
 }
 
+.panel {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Dark background */
+  }
+
+  .panel_content {
+    background-color: white;
+    margin: 10% auto;
+    padding: 20px;
+    width: 80%; /* Take up most of the viewport */
+    text-align: center;
+  }
+  
+  .close_btn {
+    font-size: 30px;
+    cursor: pointer;
+    color: rebeccapurple;
+    text-align: right;
+  }
+
 @media screen and (max-width: 675px) {
     .services_container {
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
