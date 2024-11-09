@@ -7,13 +7,15 @@ window.onscroll = function() {
     }
 }
 
-function openPanel(serviceName, serviceDescription) {
+function openPanel(serviceName, serviceDescription, serviceImage) {
     const panel = document.getElementById('servicePanel');
     const panelServiceName = document.getElementById('panelServiceName');
     const panelServiceDescription = document.getElementById('panelServiceDescription');
+    const panelServiceImage = document.getElementById('panelServiceImage');
   
     panelServiceName.innerHTML = serviceName;
     panelServiceDescription.innerHTML = serviceDescription;
+    panelServiceImage.src = serviceImage;
 
     panel.style.display = 'block';
 }
