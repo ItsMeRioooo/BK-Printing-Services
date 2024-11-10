@@ -13,8 +13,8 @@
 	<div class="banner"></div>
 	<div class="services_container">
 		{{#each services}}
-	    <div class="service" onclick="openPanel('{{this.service_name}}', '{{this.service_description}}', 'img/sample.jpg')">
-			<img src="img/sample.jpg" alt="img/sample.jpg" class="service_image">
+	    <div class="service" onclick="openPanel('{{this.service_name}}', '{{this.service_description}}', '{{this.service_img}}')">
+			<img src="{{this.service_img}}" class="service_image">
 			<p class="service_name">{{this.service_name}}</p>
 			<p class="service_description">{{this.service_description}}<p>
 		</div>
