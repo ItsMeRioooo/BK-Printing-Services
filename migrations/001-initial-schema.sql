@@ -15,7 +15,8 @@ CREATE TABLE Orders (
     order_id INT,
     order_date DATE,
     order_total DECIMAL(10, 2),
-    user_id INT
+    user_id INT,
+    test STRING
 );
 
 -- Down

@@ -29,3 +29,30 @@ document.addEventListener('keydown', function(event) {
         closePanel();
     }
 });
+
+function optionSchedule() {
+    const serviceName = document.getElementById('panelServiceName').innerText;
+    const serviceDescription = document.getElementById('panelServiceDescription').innerText;
+    const serviceImage = document.getElementById('panelServiceImage').src;
+
+    const data = {
+        name: serviceName,
+        description: serviceDescription,
+        image: serviceImage
+    };
+
+    fetch('/schedule', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
