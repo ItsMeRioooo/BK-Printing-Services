@@ -1,11 +1,11 @@
-window.onscroll = function() {
-    const header = document.getElementById("scroll_header");
-    if (window.pageYOffset > 60) {
-        header.style.transform = "translateY(-100%)";
-    } else {
-        header.style.transform = "translateY(0)";
-    }
-}
+// window.onscroll = function() {
+//     const header = document.getElementById("scroll_header");
+//     if (window.pageYOffset > 60) {
+//         header.style.transform = "translateY(-100%)";
+//     } else {
+//         header.style.transform = "translateY(0)";
+//     }
+// }
 
 function openPanel(serviceName, serviceDescription, serviceImage) {
     const panel = document.getElementById('servicePanel');
