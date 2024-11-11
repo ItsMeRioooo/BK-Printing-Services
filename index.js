@@ -36,7 +36,12 @@ app.get('/admin', async (req, res) => {
     });
 });
 app.get('/orders', async (req, res) => {
-    res.render('orders');
+    // res.render('orders');
+    const db = await dbPromise;
+    const orders = await db.all('SELECT * FROM Orders');
+    res.render('orders', {
+        orders
+    });
 });
 
 app.post('/schedule', async (req, res) => {
