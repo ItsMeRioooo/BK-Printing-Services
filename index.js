@@ -56,6 +56,15 @@ app.post('/schedule', async (req, res) => {
     res.json({ message: 'Data received successfully' });
 });
 
+app.post('/addService', async (req, res) => {
+    const { name, description, price } = req.body;
+
+    const db = await dbPromise;
+    await db.run('INSERT INTO Services (service_name, service_description, service_price) VALUES (?, ?, ?)', [name, description, price]);
+    console.log('Received data:', req.body);
+    res.json({ message: 'Service added successfully' });
+});
+
 const setup = async () => {
     const db = await dbPromise;
     await db.migrate();
