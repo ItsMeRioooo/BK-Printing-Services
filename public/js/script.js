@@ -70,29 +70,16 @@ function closeAdminPanel() {
 function addService(event) {
     event.preventDefault();
 
-    const serviceName = document.getElementById('serviceName').value;
-    const serviceDescription = document.getElementById('serviceDescription').value;
-    const servicePrice = document.getElementById('servicePrice').value;
-
-    const data = {
-        name: serviceName,
-        description: serviceDescription,
-        price: servicePrice
-    };
+    const formData = new FormData(document.getElementById('addServiceForm'));
 
     fetch('/addService', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
+        body: formData
     })
     .then(response => response.json())
     .then(data => {
         console.log('Success:', data);
-        setTimeout(() => {
-            window.location.reload();
-        }, 250);
+        // Reload the page to reflect the new service
         window.location.reload();
     })
     .catch((error) => {

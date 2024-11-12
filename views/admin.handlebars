@@ -14,11 +14,16 @@
 
     <div class="content">
         <div class="banner"></div>
-        <button onclick="openAdminPanel()">add service</button>
+        <button onclick="document.getElementById('adminPanel').style.display = 'block';">Add Service</button>
         <div class="services_container">
             {{#each services}}
-            <div class="service" onclick="openServicePanelAdmin('{{service_name}}', '{{service_description}}', '{{this.service_img}}')">
-                <img src="img/sample.jpg" alt="img/sample.jpg" class="service_image">
+            <div class="service" onclick="
+                document.getElementById('panelServiceName').innerText = '{{service_name}}';
+                document.getElementById('panelServiceDescription').innerText = '{{service_description}}';
+                document.getElementById('panelServiceImage').src = '{{service_img}}';
+                document.getElementById('servicePanel').style.display = 'block';
+            ">
+                <img src="{{service_img}}" alt="{{service_img}}" class="service_image">
                 <p class="service_name">{{service_name}}</p>
                 <p class="service_description">{{service_description}}</p>
                 <i class='bx bx-edit-alt'></i>
@@ -30,7 +35,7 @@
     <div id="servicePanel" class="panel">
         <div class="panel_content">
             <div class="close_btn">
-                <i class='bx bx-x-circle' onclick="closePanel()"></i>
+                <i class='bx bx-x-circle' onclick="document.getElementById('servicePanel').style.display = 'none';"></i>
             </div>
             <div class="pannel_service_img"> 
                 <img id="panelServiceImage">
@@ -45,16 +50,18 @@
     <div id="adminPanel" class="panel">
         <div class="panel_content">
             <div class="close_btn">
-                <i class='bx bx-x-circle' onclick="closeAdminPanel()"></i>
+                <i class='bx bx-x-circle' onclick="document.getElementById('adminPanel').style.display = 'none';"></i>
             </div>
             <h3>Add New Service</h3>
-            <form id="addServiceForm" onsubmit="addService(event)">
+            <form id="addServiceForm" onsubmit="addService(event)" enctype="multipart/form-data">
                 <label for="serviceName">Name:</label>
                 <input type="text" id="serviceName" name="serviceName" required>
                 <label for="serviceDescription">Description:</label>
                 <textarea id="serviceDescription" name="serviceDescription" required></textarea>
                 <label for="servicePrice">Price:</label>
                 <input type="number" id="servicePrice" name="servicePrice" required>
+                <label for="serviceImage">Image:</label>
+                <input type="file" id="serviceImage" name="serviceImage" accept="image/*" required>
                 <button type="submit">Add Service</button>
             </form>
         </div>
