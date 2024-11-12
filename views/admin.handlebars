@@ -17,15 +17,11 @@
         <button onclick="document.getElementById('adminPanel').style.display = 'block';">Add Service</button>
         <div class="services_container">
             {{#each services}}
-            <div class="service" onclick="
-                document.getElementById('panelServiceName').innerText = '{{service_name}}';
-                document.getElementById('panelServiceDescription').innerText = '{{service_description}}';
-                document.getElementById('panelServiceImage').src = '{{service_img}}';
-                document.getElementById('servicePanel').style.display = 'block';
-            ">
+            <div class="service" onclick="openServicePanelAdmin('{{service_id}}', '{{service_name}}', '{{service_description}}', '{{service_img}}', '{{service_price}}')">
                 <img src="{{service_img}}" alt="{{service_img}}" class="service_image">
                 <p class="service_name">{{service_name}}</p>
                 <p class="service_description">{{service_description}}</p>
+                <p>{{service_id}}</p>
                 <i class='bx bx-edit-alt'></i>
             </div>
             {{/each}}
@@ -42,8 +38,10 @@
             </div>
             <h3 id="panelServiceName"></h3>
             <p id="panelServiceDescription"></p>
-            <button class="option_schedule" onclick="optionSchedule()">Schedule</button>
-            <button class="option_print" onclick="optionPrint()">Print</button>
+            <p id="panelServicePrice"></p>
+            <p id="panelServiceId"></p>
+            <button class="option_schedule" onclick="openEditPanel()">Edit</button>
+            <button class="option_print" onclick="deleteService()">Delete</button>
         </div>
     </div>
 
@@ -63,6 +61,27 @@
                 <label for="serviceImage">Image:</label>
                 <input type="file" id="serviceImage" name="serviceImage" accept="image/*" required>
                 <button type="submit">Add Service</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="editPanel" class="panel">
+        <div class="panel_content">
+            <div class="close_btn">
+                <i class='bx bx-x-circle' onclick="document.getElementById('editPanel').style.display = 'none';"></i>
+            </div>
+            <h3>Edit Service</h3>
+            <form id="editServiceForm" onsubmit="editService(event)" enctype="multipart/form-data">
+                <input type="hidden" id="editServiceId" name="serviceId">
+                <label for="editServiceName">Name:</label>
+                <input type="text" id="editServiceName" name="serviceName">
+                <label for="editServiceDescription">Description:</label>
+                <textarea id="editServiceDescription" name="serviceDescription"></textarea>
+                <label for="editServicePrice">Price:</label>
+                <input type="number" id="editServicePrice" name="servicePrice">
+                <label for="editServiceImage">Image:</label>
+                <input type="file" id="editServiceImage" name="serviceImage" accept="image/*">
+                <button type="submit">Save Changes</button>
             </form>
         </div>
     </div>

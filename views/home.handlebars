@@ -13,7 +13,7 @@
 	<div class="banner"></div>
 	<div class="services_container">
 		{{#each services}}
-	    <div class="service" onclick="openServicePanel('{{this.service_name}}', '{{this.service_description}}', '{{this.service_img}}')">
+	    <div class="service" onclick="openServicePanel('{{this.service_name}}', '{{this.service_description}}', '{{this.service_img}}', '{{this.service_price}}')">
 			<img src="{{this.service_img}}" class="service_image">
 			<p class="service_name">{{this.service_name}}</p>
 			<p class="service_description">{{this.service_description}}<p>
@@ -32,6 +32,7 @@
 			</div>
 			<h3 id="panelServiceName"></h3>
 			<p id="panelServiceDescription"></p>
+			<p id="panelServicePrice"></p>
 			<button class="option_schedule" onclick="optionSchedule()">Schedule</button>
 			<button class="option_print" onclick="optionPrint">Print</button>
 		</div>

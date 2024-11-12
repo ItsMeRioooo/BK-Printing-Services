@@ -121,6 +121,12 @@ header {
     object-fit: cover;
   }
 
+  .service_price {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 0px 0px 0px 5px;
+  }
+
   .close_btn {
     font-size: 30px;
     cursor: pointer;

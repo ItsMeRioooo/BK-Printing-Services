@@ -1,5 +1,6 @@
 -- Up
 CREATE TABLE Services (
+    service_id INTEGER PRIMARY KEY AUTOINCREMENT,
     service_name STRING,
     service_description STRING,
     service_price DECIMAL(10, 2),
