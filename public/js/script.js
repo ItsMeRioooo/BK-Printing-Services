@@ -42,12 +42,12 @@ document.addEventListener('keydown', function(event) {
 function optionSchedule() {
     const serviceName = document.getElementById('panelServiceName').innerText;
     const serviceDescription = document.getElementById('panelServiceDescription').innerText;
-    const serviceImage = document.getElementById('panelServiceImage').src;
+    const servicePrice = document.getElementById('panelServicePrice').innerText;
 
     const data = {
         name: serviceName,
         description: serviceDescription,
-        image: serviceImage
+        price: servicePrice
     };
 
     fetch('/schedule', {

@@ -91,6 +91,15 @@ app.delete('/deleteService/:id', async (req, res) => {
     res.json({ message: 'Service deleted successfully' });
 });
 
+app.post('/schedule', async (req, res) => {
+    const { name, description, price } = req.body;
+
+    const db = await dbPromise;
+    await db.run('INSERT INTO Orders (test) VALUES (?)', [`${name},\t ${description},\t ${price}`]);
+    console.log('Scheduled service:', req.body);
+    res.json({ message: 'Service scheduled successfully' });
+});
+
 app.get('/', async (req, res) => {
     const db = await dbPromise;
     const services = await db.all('SELECT * FROM Services');
