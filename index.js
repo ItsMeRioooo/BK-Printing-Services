@@ -116,6 +116,13 @@ app.get('/admin', async (req, res) => {
     });
 });
 
+app.get('/service/:id', async (req, res) => {
+	const { id } = req.params;
+	const db = await dbPromise;
+	const service = await db.get('SELECT * FROM Services WHERE service_id = ?', [id]);
+	res.json(service);
+});
+
 app.get('/orders', async (req, res) => {
     const db = await dbPromise;
     const orders = await db.all('SELECT * FROM Orders');

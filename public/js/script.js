@@ -1,18 +1,13 @@
-// window.onscroll = function() {
-//     const header = document.getElementById("scroll_header");
-//     if (window.pageYOffset > 60) {
-//         header.style.transform = "translateY(-100%)";
-//     } else {
-//         header.style.transform = "translateY(0)";
-//     }
-// }
-
-function openServicePanel(name, description, image, price) {
-    document.getElementById('panelServiceName').innerText = name;
-    document.getElementById('panelServiceDescription').innerText = description;
-    document.getElementById('panelServiceImage').src = image;
-    document.getElementById('panelServicePrice').innerText = price + " PHP";
-    document.getElementById('servicePanel').style.display = 'block';
+function openServicePanel(serviceId) {
+	document.getElementById('servicePanel').style.display = 'block';
+	fetch(`/service/${serviceId}`)
+		.then(response => response.json())
+		.then(data => {
+			document.getElementById('panelServiceName').innerText = data.service_name;
+			document.getElementById('panelServiceDescription').innerText = data.service_description;
+			document.getElementById('panelServiceImage').src = data.service_img;
+			document.getElementById('panelServicePrice').innerText = data.service_price + " PHP";
+		});
 }
 
 function closePanel() {

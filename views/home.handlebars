@@ -10,13 +10,12 @@
 
 
 <div class="content">
-	<div class="banner"></div>
 	<div class="services_container">
 		{{#each services}}
-	    <div class="service" onclick="openServicePanel('{{this.service_name}}', '{{this.service_description}}', '{{this.service_img}}', '{{this.service_price}}')">
+	    <div class="service" onclick="openServicePanel('{{this.service_id}}')">
 			<img src="{{this.service_img}}" class="service_image">
 			<p class="service_name">{{this.service_name}}</p>
-			<p class="service_description">{{this.service_description}}<p>
+			<p class="service_description">{{this.service_description}}</p>
 			<p class="service_price">{{this.service_price}} PHP</p>
 		</div>
 		{{/each}}
