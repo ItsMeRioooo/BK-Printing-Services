@@ -21,13 +21,10 @@ function openAdminPanel() {
 //close functions
 document.addEventListener('keydown', function(event) {
     if (event.key === 'Escape') {
+        closePanel();
+        closeAdminPanel();
         if (document.getElementById('editPanel').style.display == 'block') {
             closeEditPanel()
-        }else if (document.getElementById('servicePanel').style.display == 'block') {
-            closePanel //for home page do not remove
-        } else {
-            closePanel();
-            closeAdminPanel();
         }
     }
 });
