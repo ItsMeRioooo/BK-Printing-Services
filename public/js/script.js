@@ -32,7 +32,8 @@ function closeAdminPanel() {
 
 function closeEditPanel() {
     document.getElementById('editPanel').style.display = 'none';
-    openServicePanelAdmin();
+    
+    document.getElementById('servicePanel').style.display = 'block';
 }
 
 function closePanel() {

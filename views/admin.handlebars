@@ -23,6 +23,7 @@
         <button onclick="document.getElementById('adminPanel').style.display = 'block';">Add Service</button> <-- -->
         <div class="services_container">
             {{#each services}}
+            
             <div class="service" onclick="openServicePanelAdmin('{{service_id}}', '{{service_name}}', '{{service_description}}', '{{service_img}}', '{{service_price}}')">
                 <img src="{{service_img}}" alt="{{service_img}}" class="service_image">
                 <p class="service_name">{{service_name}}</p>
