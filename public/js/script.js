@@ -1,19 +1,4 @@
-function openServicePanel(serviceId) {
-	document.getElementById('servicePanel').style.display = 'block';
-	fetch(`/service/${serviceId}`)
-		.then(response => response.json())
-		.then(data => {
-			document.getElementById('panelServiceName').innerText = data.service_name;
-			document.getElementById('panelServiceDescription').innerText = data.service_description;
-			document.getElementById('panelServiceImage').src = data.service_img;
-			document.getElementById('panelServicePrice').innerText = data.service_price + " PHP";
-		});
-}
-
-function closePanel() {
-    document.getElementById('servicePanel').style.display = 'none';
-}
-
+// open functions
 function openServicePanelAdmin(id, name, description, image, price) {
     document.getElementById('panelServiceId').innerText = id;
     document.getElementById('panelServiceName').innerText = name;
@@ -31,8 +16,47 @@ function openServicePanelAdmin(id, name, description, image, price) {
 document.addEventListener('keydown', function(event) {
     if (event.key === 'Escape') {
         closePanel();
+        closeAdminPanel();
     }
 });
+
+function openAdminPanel() {
+    document.getElementById('adminPanel').style.display = 'block';
+}
+
+
+//close functions
+function closeAdminPanel() {
+    document.getElementById('adminPanel').style.display = 'none';
+}
+
+function closeEditPanel() {
+    document.getElementById('editPanel').style.display = 'none';
+    openServicePanelAdmin();
+}
+
+function closePanel() {
+    document.getElementById('servicePanel').style.display = 'none';
+}
+
+function openEditPanel() {
+    document.getElementById('editPanel').style.display = 'block';
+    closePanel();
+}
+
+
+//fetch
+function openServicePanel(serviceId) {
+	document.getElementById('servicePanel').style.display = 'block';
+	fetch(`/service/${serviceId}`)
+		.then(response => response.json())
+		.then(data => {
+			document.getElementById('panelServiceName').innerText = data.service_name;
+			document.getElementById('panelServiceDescription').innerText = data.service_description;
+			document.getElementById('panelServiceImage').src = data.service_img;
+			document.getElementById('panelServicePrice').innerText = data.service_price + " PHP";
+		});
+}
 
 function optionSchedule() {
     const serviceName = document.getElementById('panelServiceName').innerText;
@@ -61,14 +85,6 @@ function optionSchedule() {
     });
 }
 
-function openAdminPanel() {
-    document.getElementById('adminPanel').style.display = 'block';
-}
-
-function closeAdminPanel() {
-    document.getElementById('adminPanel').style.display = 'none';
-}
-
 function addService(event) {
     event.preventDefault();
 
@@ -89,8 +105,24 @@ function addService(event) {
     });
 }
 
-function openEditPanel() {
-    document.getElementById('editPanel').style.display = 'block';
+function addService(event) {
+    event.preventDefault();
+
+    const formData = new FormData(document.getElementById('addServiceForm'));
+
+    fetch('/addService', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+        // Reload the page to reflect the new service
+        window.location.reload();
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
 }
 
 function editService(event) {
