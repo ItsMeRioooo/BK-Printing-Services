@@ -61,16 +61,21 @@
             <h3>Add New Service</h3>
             <form id="addServiceForm" onsubmit="addService(event)" enctype="multipart/form-data">
                 <label for="serviceName">Name:</label>
+                <br>
                 <input type="text" id="serviceName" name="serviceName" required>
-                <br>
+                <br><br>
                 <label for="serviceDescription">Description:</label>
+                <br>
                 <textarea id="serviceDescription" name="serviceDescription" required></textarea>
-                <br>
+                <br><br>
                 <label for="servicePrice">Price:</label>
-                <input type="number" id="servicePrice" name="servicePrice" required>
                 <br>
+                <input type="number" id="servicePrice" name="servicePrice" required>
+                <br><br>
                 <label for="serviceImage">Image:</label>
+                <br>
                 <input type="file" id="serviceImage" name="serviceImage" accept="image/*" required>
+                <br><br>
                 <div class="buttonContainer">
                     <button type="submit">Add Service</button>
                 </div>
@@ -89,14 +94,24 @@
                 <form id="editServiceForm" onsubmit="editService(event)" enctype="multipart/form-data">
                     <input type="hidden" id="editServiceId" name="serviceId">
                     <label for="editServiceName">Name:</label>
+                    <br>
                     <input type="text" id="editServiceName" name="serviceName">
+                    <br><br>
                     <label for="editServiceDescription">Description:</label>
+                    <br>
                     <textarea id="editServiceDescription" name="serviceDescription"></textarea>
+                    <br><br>
                     <label for="editServicePrice">Price:</label>
+                    <br>
                     <input type="number" id="editServicePrice" name="servicePrice">
+                    <br><br>
                     <label for="editServiceImage">Image:</label>
+                    <br>
                     <input type="file" id="editServiceImage" name="serviceImage" accept="image/*">
-                    <button type="submit">Save Changes</button>
+                    <br><br>
+                    <div class="buttonContainer">
+                        <button type="submit">Save Changes</button>
+                    </div>
                 </form>
             </div>
         </div>
