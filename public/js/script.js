@@ -13,19 +13,23 @@ function openServicePanelAdmin(id, name, description, image, price) {
     document.getElementById('editServicePrice').value = price;
 }
 
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape') {
-        closePanel();
-        closeAdminPanel();
-    }
-});
-
 function openAdminPanel() {
     document.getElementById('adminPanel').style.display = 'block';
 }
 
 
 //close functions
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        if (document.getElementById('editPanel').style.display == 'block') {
+            closeEditPanel()
+        } else {
+            closePanel();
+            closeAdminPanel();
+        }
+    }
+});
+
 function closeAdminPanel() {
     document.getElementById('adminPanel').style.display = 'none';
 }
@@ -118,7 +122,6 @@ function addService(event) {
     .then(response => response.json())
     .then(data => {
         console.log('Success:', data);
-        // Reload the page to reflect the new service
         window.location.reload();
     })
     .catch((error) => {
@@ -155,7 +158,6 @@ function deleteService() {
     .then(response => response.json())
     .then(data => {
         console.log('Success:', data);
-        // Reload the page to reflect the deleted service
         window.location.reload();
     })
     .catch((error) => {
