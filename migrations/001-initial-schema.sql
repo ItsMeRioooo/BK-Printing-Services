@@ -13,11 +13,14 @@ CREATE TABLE Users (
     user_perms STRING
 );
 CREATE TABLE Orders (
-    order_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    order_id INTEGER,
     order_name STRING,
     order_date DATE,
     order_price DECIMAL(10, 2),
-    user_id INT,
+    customer_name STRING,
+    customer_contact STRING,
+    customer_message STRING,
+    order_file STRING, -- Path to the file
     order_img STRING
 );
 

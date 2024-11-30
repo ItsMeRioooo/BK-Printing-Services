@@ -21,7 +21,7 @@
 		{{/each}}
 	</div>
 
-	<div class="modal" id="serviceModal" >
+	<div class="modal" id="serviceModal">
 		<div class="modal_container">
 			<div class="modal_content">
 				<div class="close_btn">
@@ -49,15 +49,73 @@
 					<i class='bx bx-x-circle' onclick="closeScheduleModal()"></i>
 				</div>
 				<h3>Schedule</h3>
-				<div class="schedule_form">
-					<input type="text" id="scheduleName" placeholder="Name">
-					<input type="text" id="scheduleEmail" placeholder="Email">
-					<input type="text" id="scheduleContact" placeholder="Contact Number">
-					<input type="date" id="scheduleDate" placeholder="Date">
-					<input type="time" id="scheduleTime" placeholder="Time">
-					<button class="schedule_btn" onclick="scheduleService()">Schedule</button>
-				</div>
+				<form class="schedule_form" onsubmit="scheduleService(event)">
+					<label for="scheduleName">Name:</label><br>
+					<input type="text" id="scheduleName" required>
+					<br><br>
+					<label for="scheduleEmailOrNumber">Email or Number:</label><br>
+					<input type="text" id="scheduleEmailOrNumber" required>
+					<br><br>
+					<label for="scheduleDate">Date:</label><br>
+					<input type="date" id="scheduleDate" required>
+					<br><br>
+					<label for="scheduleMessage">Message:</label><br>
+					<textarea id="scheduleMessage" required></textarea>
+					<br><br>
+					<label for="scheduleFile">Upload File:</label><br>
+					<input type="file" id="scheduleFile" placeholder="Upload File" required>
+					<br><br>
+					<div class="button_container">
+						<button class="schedule_btn" type="submit">Confirm</button>
+					</div>
+				</form>
 			</div>
 		</div>
+	</div>
+
+	<div class="modal" id="printModal">
+		<div class="modal_container">
+			<div class="modal_content">
+				<div class="close_btn">
+					<i class='bx bx-x-circle' onclick="closePrintModal()"></i>
+				</div>
+				<h3>Print</h3>
+				<form class="print_form" onsubmit="printService(event)">
+					<label for="printName">Name:</label><br>
+					<input type="text" id="printName" required>
+					<br><br>
+					<label for="printEmailOrNumber">Email or Number:</label><br>
+					<input type="text" id="printEmailOrNumber" required>
+					<br><br>
+					<label for="printMessage">Message:</label><br>
+					<textarea id="printMessage" required></textarea>
+					<br><br>
+					<label for="printFile">Upload File:</label><br>
+					<input type="file" id="printFile" placeholder="Upload File" required>
+					<br><br>
+					<div class="button_container">
+						<button class="print_btn" type="submit">Confirm</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal" id="reciptModal">
+	    <div class="modal_container">
+	        <div class="modal_content">
+	            <div class="close_btn">
+	                <i class='bx bx-x-circle' onclick="closeReciptModal()"></i>
+	            </div>
+	            <h3>Receipt</h3>
+	            <p><strong>Order ID:</strong> <span id="reciptOrderId"></span></p>
+	            <p><strong>Service Name:</strong> <span id="reciptServiceName"></span></p>
+	            <p><strong>Customer Name:</strong> <span id="reciptCustomerName"></span></p>
+	            <p><strong>Contact:</strong> <span id="reciptEmailOrNumber"></span></p>
+				<p><strong>Print or Schedule:</strong> <span id="reciptPrintForSchedule"></span></p>
+	        </div>
+	    </div>
+	</div>
+
 </div>
 <script src="js/home.js"></script>

@@ -24,6 +24,13 @@ function closeScheduleModal() {
     document.getElementById('serviceModal').style.display = 'block';
 }
 
+function reciptModal() {
+    document.getElementById('scheduleModal').style.display = 'none';
+    document.getElementById('reciptModal').style.display = 'block';
+}
+function closeReciptModal() {
+    document.getElementById('reciptModal').style.display = 'none';
+}
 
 document.addEventListener('keydown', function(event) {
     if (event.key === 'Escape') {
@@ -35,26 +42,48 @@ document.addEventListener('keydown', function(event) {
 });
 
 
-function optionSchedule() {
-    const modalId = document.getElementById('modalServiceId').innerText;
-    console.log(modalId);
+function scheduleService(event) {
+    event.preventDefault();
 
-    const data = {
-        id: modalId
-    };
+    const serviceId = document.getElementById('modalServiceId').innerText;
+    const name = document.getElementById('scheduleName').value;
+    const emailOrNumber = document.getElementById('scheduleEmailOrNumber').value;
+    const date = document.getElementById('scheduleDate').value;
+    const message = document.getElementById('scheduleMessage').value;
+    const fileInput = document.getElementById('scheduleFile');
+    const file = fileInput.files[0];
+
+    const formData = new FormData();
+    formData.append('serviceId', serviceId);
+    formData.append('name', name);
+    formData.append('emailOrNumber', emailOrNumber);
+    formData.append('date', date);
+    formData.append('message', message);
+    formData.append('file', file);
 
     fetch('/schedule', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
+        body: formData
     })
     .then(response => response.json())
     .then(data => {
-        console.log('Success:', data);
+        const orderId = data.orderId; // Assuming the server returns the orderId
+        console.log('Order ID:', orderId);
+        fetch(`/order/${orderId}`)
+            .then(response => response.json())
+            .then(order => {
+                document.getElementById('reciptOrderId').innerText = order.order_id;
+                document.getElementById('reciptServiceName').innerText = order.order_name;
+                document.getElementById('reciptCustomerName').innerText = order.customer_name;
+                document.getElementById('reciptEmailOrNumber').innerText = order.customer_contact;
+            });
+        reciptModal();
     })
-    .catch((error) => {
+    .catch(error => {
         console.error('Error:', error);
     });
+}
+
+function closeReciptModal() {
+    document.getElementById('reciptModal').style.display = 'none';
 }

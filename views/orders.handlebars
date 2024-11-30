@@ -9,10 +9,10 @@
     <br>
     {{#each orders}}
     <div class="orders">
-        <img src="{{order_img}}" alt="" class="order_img">
         <h3>#{{order_id}}</h3>
+        <img src="{{order_img}}" alt="" class="order_img">
         <p>{{order_name}}</p>
-        <p>mm-dd-yyyy</p>
+        <p>{{order_date}}</p>
         <p>state</p>
     </div>
     {{/each}}

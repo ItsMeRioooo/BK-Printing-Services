@@ -7,6 +7,7 @@ import sqlite3 from 'sqlite3';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import { engine } from 'express-handlebars';
+import fs from 'fs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -24,7 +25,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-const storage = multer.diskStorage({
+const adminStorage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, path.join(__dirname, 'public/img'));
     },
@@ -33,19 +34,35 @@ const storage = multer.diskStorage({
     }
 });
 
-const upload = multer({ storage });
+const adminUpload = multer({ storage: adminStorage });
 
-app.post('/addService', upload.single('serviceImage'), async (req, res) => {
+const scheduleStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        const dir = path.join(__dirname, 'public/img/cdn');
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir, { recursive: true });
+        }
+        cb(null, dir);
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname));
+    }
+});
+
+const scheduleUpload = multer({ storage: scheduleStorage });
+
+app.post('/addService', adminUpload.single('serviceImage'), async (req, res) => {
     const { serviceName, serviceDescription, servicePrice } = req.body;
     const serviceImg = `/img/${req.file.filename}`;
 
     const db = await dbPromise;
-    await db.run('INSERT INTO Services (service_name, service_description, service_price, service_img) VALUES (?, ?, ?, ?)', [serviceName, serviceDescription, servicePrice, serviceImg]);
+    await db.run('INSERT INTO Services (service_name, service_description, service_price, service_img) VALUES (?, ?, ?, ?)',
+        [serviceName, serviceDescription, servicePrice, serviceImg]);
     console.log('Received data:', req.body);
     res.json({ message: 'Service added successfully' });
 });
 
-app.post('/editService', upload.single('serviceImage'), async (req, res) => {
+app.post('/editService', adminUpload.single('serviceImage'), async (req, res) => {
     const { serviceId, serviceName, serviceDescription, servicePrice } = req.body;
     let serviceImg = req.body.serviceImg;
 
@@ -91,15 +108,30 @@ app.delete('/deleteService/:id', async (req, res) => {
     res.json({ message: 'Service deleted successfully' });
 });
 
-app.post('/schedule', async (req, res) => {
-    const { id } = req.body;
+app.post('/schedule', scheduleUpload.single('file'), async (req, res) => {
+    const { serviceId, name, emailOrNumber, date, message } = req.body;
+    const file = req.file;
+
     const db = await dbPromise;
 
-	const service = await db.get('SELECT * FROM Services WHERE service_id = ?', [id]);
-    await db.run('INSERT INTO Orders (order_img, order_name, order_price) VALUES (?, ?, ?)', [service.service_img, service.service_name, service.service_price]);
+    const service = await db.get('SELECT * FROM Services WHERE service_id = ?', [serviceId]);
+    if (!service) {
+        return res.status(404).json({ message: 'Service not found' });
+    }
+
+    const filePath = file ? `/img/cdn/${file.filename}` : null;
+    
+    const fileNameWithoutExtension = file.filename.split('.').slice(0, -1).join('.');
+
+    const middleIndex = Math.ceil(fileNameWithoutExtension.length / 2);
+    const modifiedFileName = `${fileNameWithoutExtension.slice(middleIndex)}${fileNameWithoutExtension.slice(0, middleIndex)}`;
+    const orderId = modifiedFileName;
+
+    await db.run('INSERT INTO Orders (order_id, order_img, order_name, order_price, customer_name, customer_contact, order_date, customer_message, order_file) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+        [orderId, service.service_img, service.service_name, service.service_price, name, emailOrNumber, date, message, filePath]);
+
     res.json({ message: 'Service scheduled successfully' });
 });
-
 
 app.get('/', async (req, res) => {
     const db = await dbPromise;
@@ -120,19 +152,29 @@ app.get('/admin', async (req, res) => {
 });
 
 app.get('/service/:id', async (req, res) => {
-	const { id } = req.params;
-	const db = await dbPromise;
-	const service = await db.get('SELECT * FROM Services WHERE service_id = ?', [id]);
-	res.json(service);
+    const { id } = req.params;
+    const db = await dbPromise;
+    const service = await db.get('SELECT * FROM Services WHERE service_id = ?', [id]);
+    res.json(service);
 });
 
 app.get('/orders', async (req, res) => {
     const db = await dbPromise;
-    const orders = await db.all('SELECT * FROM Orders');
+    const orders = await db.all('SELECT * FROM Orders ORDER BY order_date ASC');
     res.render('orders', {
         title: 'Orders Page',
         orders
     });
+});
+
+app.get('/order/:id', async (req, res) => {
+    const { id } = req.params;
+    const db = await dbPromise;
+    const order = await db.get('SELECT * FROM Orders WHERE order_id = ?', [id]);
+    if (!order) {
+        return res.status(404).json({ message: 'Order not found' });
+    }
+    res.json(order);
 });
 
 const setup = async () => {
