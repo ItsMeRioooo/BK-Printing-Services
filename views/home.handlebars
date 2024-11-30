@@ -12,7 +12,7 @@
 <div class="content">
 	<div class="services_container">
 		{{#each services}}
-	    <div class="service" onclick="openServicePanel('{{this.service_id}}')">
+	    <div class="service" onclick="openServiceModal('{{this.service_id}}')">
 			<img src="{{this.service_img}}" class="service_image">
 			<p class="service_name">{{this.service_name}}</p>
 			<p class="service_description">{{this.service_description}}</p>
@@ -21,25 +21,43 @@
 		{{/each}}
 	</div>
 
-	<div class="panel" id="servicePanel" >
-		<div class="panel_container">
-			<div class="panel_content">
+	<div class="modal" id="serviceModal" >
+		<div class="modal_container">
+			<div class="modal_content">
 				<div class="close_btn">
-					<i class='bx bx-x-circle' onclick="closePanel()"></i>
+					<i class='bx bx-x-circle' onclick="closeServiceModal()"></i>
 				</div>
-					<h3 id="panelServiceName"></h3>
+					<h3 id="modalServiceName"></h3>
 				<div class="pannel_service_img"> 
-					<img id="panelServiceImage">
+					<img id="modalServiceImage">
 				</div>
-				<p id="panelServiceDescription"></p>
-				<p id="panelServicePrice"></p>
+				<p id="modalServiceDescription"></p>
+				<p id="modalServicePrice"></p>
 				<div class="button_container">
-					<p id="panelServiceId"></p>
-					<button class="option_schedule" onclick="optionSchedule()">Schedule</button>
+					<p id="modalServiceId"></p>
+					<button class="option_schedule" onclick="openScheduleModal()">Schedule</button>
 					<button class="option_print" onclick="optionPrint">Print</button>
 				</div>	
 			</div>
 		</div>
 	</div>
+
+	<div class="modal" id="scheduleModal">
+		<div class="modal_container">
+			<div class="modal_content">
+				<div class="close_btn">
+					<i class='bx bx-x-circle' onclick="closeScheduleModal()"></i>
+				</div>
+				<h3>Schedule</h3>
+				<div class="schedule_form">
+					<input type="text" id="scheduleName" placeholder="Name">
+					<input type="text" id="scheduleEmail" placeholder="Email">
+					<input type="text" id="scheduleContact" placeholder="Contact Number">
+					<input type="date" id="scheduleDate" placeholder="Date">
+					<input type="time" id="scheduleTime" placeholder="Time">
+					<button class="schedule_btn" onclick="scheduleService()">Schedule</button>
+				</div>
+			</div>
+		</div>
 </div>
-	<script src="js/script.js"></script>
+<script src="js/home.js"></script>

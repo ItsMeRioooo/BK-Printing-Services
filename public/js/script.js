@@ -1,11 +1,11 @@
-// open functions
-function openServicePanelAdmin(id, name, description, image, price) {
-    document.getElementById('panelServiceId').innerText = id;
-    document.getElementById('panelServiceName').innerText = name;
-    document.getElementById('panelServiceDescription').innerText = description;
-    document.getElementById('panelServiceImage').src = image;
-    document.getElementById('panelServicePrice').innerText = price + " PHP";
-    document.getElementById('servicePanel').style.display = 'block';
+openAdminModal// open functions
+function openAdminModal(id, name, description, image, price) {
+    document.getElementById('modalServiceId').innerText = id;
+    document.getElementById('modalServiceName').innerText = name;
+    document.getElementById('modalServiceDescription').innerText = description;
+    document.getElementById('modalServiceImage').src = image;
+    document.getElementById('modalServicePrice').innerText = price + " PHP";
+    document.getElementById('adminModal').style.display = 'block';
 
     document.getElementById('editServiceId').value = id;
     document.getElementById('editServiceName').value = name;
@@ -13,80 +13,42 @@ function openServicePanelAdmin(id, name, description, image, price) {
     document.getElementById('editServicePrice').value = price;
 }
 
-function openAdminPanel() {
-    document.getElementById('adminPanel').style.display = 'block';
+
+function openAddModal() {
+    document.getElementById('addModal').style.display = 'block';
 }
 
+
+function openEditModal() {
+    document.getElementById('editModal').style.display = 'block';
+    closeAdminModal();
+}
 
 //close functions
 document.addEventListener('keydown', function(event) {
     if (event.key === 'Escape') {
-        closePanel();
-        closeAdminPanel();
-        if (document.getElementById('editPanel').style.display == 'block') {
-            closeEditPanel()
+        closeAdminModal();
+        closeAddModal();
+        if (document.getElementById('editModal').style.display == 'block') {
+            closeEditModal()
         }
     }
 });
 
-function closeAdminPanel() {
-    document.getElementById('adminPanel').style.display = 'none';
+function closeAddModal() {
+    document.getElementById('addModal').style.display = 'none';
 }
 
-function closeEditPanel() {
-    document.getElementById('editPanel').style.display = 'none';
-    
-    document.getElementById('servicePanel').style.display = 'block';
+function closeAdminModal() {
+    document.getElementById('adminModal').style.display = 'none';
 }
 
-function closePanel() {
-    document.getElementById('servicePanel').style.display = 'none';
+function closeEditModal() {
+    document.getElementById('editModal').style.display = 'none';
+    document.getElementById('adminModal').style.display = 'block';
 }
-
-function openEditPanel() {
-    document.getElementById('editPanel').style.display = 'block';
-    closePanel();
-}
-
 
 //fetch
-function openServicePanel(serviceId) {
-    document.getElementById('panelServiceId').innerText = serviceId;
-	document.getElementById('servicePanel').style.display = 'block';
-	fetch(`/service/${serviceId}`)
-		.then(response => response.json())
-		.then(data => {
-			document.getElementById('panelServiceName').innerText = data.service_name;
-			document.getElementById('panelServiceDescription').innerText = data.service_description;
-			document.getElementById('panelServiceImage').src = data.service_img;
-			document.getElementById('panelServicePrice').innerText = data.service_price + " PHP";
-		});
-}
-
-function optionSchedule() {
-    const panelId = document.getElementById('panelServiceId').innerText;
-    console.log(panelId);
-
-    const data = {
-        id: panelId
-    };
-
-    fetch('/schedule', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Success:', data);
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-    });
-}
-
 function addService(event) {
     event.preventDefault();
 
@@ -147,7 +109,7 @@ function editService(event) {
 }
 
 function deleteService() {
-    const serviceId = document.getElementById('panelServiceId').innerText;
+    const serviceId = document.getElementById('modalServiceId').innerText;
 
     fetch(`/deleteService/${serviceId}`, {
         method: 'DELETE'

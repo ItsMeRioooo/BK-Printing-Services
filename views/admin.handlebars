@@ -16,14 +16,14 @@
         </ul>
     </nav>
 
-    <div class="addButton" onclick="openAdminPanel()">
+    <div class="addButton" onclick="openAddModal()">
         <i class='bx bxs-plus-square'></i>
     </div>
 
     <div class="content">
         <div class="services_container">
             {{#each services}}
-            <div class="service" onclick="openServicePanelAdmin('{{service_id}}', '{{service_name}}', '{{service_description}}', '{{service_img}}', '{{service_price}}')">
+            <div class="service" onclick="openAdminModal('{{service_id}}', '{{service_name}}', '{{service_description}}', '{{service_img}}', '{{service_price}}')">
                 <img src="{{service_img}}" alt="{{service_img}}" class="service_image">
                 <p class="service_name">{{service_name}}</p>
                 <p class="service_description">{{service_description}}</p>
@@ -33,32 +33,32 @@
         </div>
     </div>
 
-    <div id="servicePanel" class="panel">
-        <div class="panel_container">
-            <div class="panel_content">
+    <div id="adminModal" class="modal">
+        <div class="modal_container">
+            <div class="modal_content">
                 <div class="close_btn">
-                    <i class='bx bx-x-circle' onclick="closePanel()"></i>
+                    <i class='bx bx-x-circle' onclick="closeAdminModal()"></i>
                 </div>
                 <div class="pannel_service_img"> 
-                    <img id="panelServiceImage">
+                    <img id="modalServiceImage">
                 </div>
-                <h3 id="panelServiceName"></h3>
-                <p id="panelServiceDescription"></p>
-                <p id="panelServicePrice"></p>
-                <p id="panelServiceId"></p>
+                <h3 id="modalServiceName"></h3>
+                <p id="modalServiceDescription"></p>
+                <p id="modalServicePrice"></p>
+                <p id="modalServiceId"></p>
                 <div class="button_container">
-                    <button class="option_schedule" onclick="openEditPanel()">Edit</button>
+                    <button class="option_schedule" onclick="openEditModal()">Edit</button>
                     <button class="option_print" onclick="deleteService()">Delete</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="adminPanel" class="panel">
-        <div class="panel_container">
-                    <div class="panel_content">
+    <div id="addModal" class="modal">
+        <div class="modal_container">
+                    <div class="modal_content">
             <div class="close_btn">
-                <i class='bx bx-x-circle' onclick="closeAdminPanel()"></i>
+                <i class='bx bx-x-circle' onclick="closeAddModal()"></i>
             </div>
             <h3>Add New Service</h3>
             <form id="addServiceForm" onsubmit="addService(event)" enctype="multipart/form-data">
@@ -86,11 +86,11 @@
         </div>
     </div>
 
-    <div id="editPanel" class="panel">
-        <div class="panel_container">
-            <div class="panel_content">
+    <div id="editModal" class="modal">
+        <div class="modal_container">
+            <div class="modal_content">
                 <div class="close_btn">
-                    <i class='bx bx-x-circle' onclick="closeEditPanel()"></i>
+                    <i class='bx bx-x-circle' onclick="closeEditModal()"></i>
                 </div>
                 <h3>Edit Service</h3>
                 <form id="editServiceForm" onsubmit="editService(event)" enctype="multipart/form-data">
