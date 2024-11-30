@@ -16,9 +16,11 @@
         </ul>
     </nav>
 
+    <div class="addButton" onclick="openAdminPanel()">
+        <i class='bx bxs-plus-square'></i>
+    </div>
+
     <div class="content">
-        <div class="banner"></div>
-        <button onclick="openAdminPanel()">Add Service</button>
         <div class="services_container">
             {{#each services}}
             <div class="service" onclick="openServicePanelAdmin('{{service_id}}', '{{service_name}}', '{{service_description}}', '{{service_img}}', '{{service_price}}')">

@@ -161,6 +161,10 @@ header {
     color: #333;
 }
 
+#panelServiceId {
+    display: none;
+}
+
 .panel_content button {
     margin: 10px 0;
     padding: 10px 20px;
@@ -273,6 +277,20 @@ nav ul li a:hover {
     border-radius: 10px;
 }
 
+
+/* admin */
+.addButton {
+    z-index: 1;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-size: 60px;
+    cursor: pointer;
+    color: #333;
+}
+.addButton:hover {
+    color: #555;
+}
 
 @media screen and (max-width: 675px) {
     .services_container {
