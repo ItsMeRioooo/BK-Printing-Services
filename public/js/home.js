@@ -24,12 +24,12 @@ function closeScheduleModal() {
     document.getElementById('serviceModal').style.display = 'block';
 }
 
-function reciptModal() {
+function receiptModal() {
     document.getElementById('scheduleModal').style.display = 'none';
-    document.getElementById('reciptModal').style.display = 'block';
+    document.getElementById('receiptModal').style.display = 'block';
 }
-function closeReciptModal() {
-    document.getElementById('reciptModal').style.display = 'none';
+function closereceiptModal() {
+    document.getElementById('receiptModal').style.display = 'none';
 }
 
 document.addEventListener('keydown', function(event) {
@@ -72,18 +72,18 @@ function scheduleService(event) {
         fetch(`/order/${orderId}`)
             .then(response => response.json())
             .then(order => {
-                document.getElementById('reciptOrderId').innerText = order.order_id;
-                document.getElementById('reciptServiceName').innerText = order.order_name;
-                document.getElementById('reciptCustomerName').innerText = order.customer_name;
-                document.getElementById('reciptEmailOrNumber').innerText = order.customer_contact;
+                document.getElementById('receiptOrderId').innerText = order.order_id;
+                document.getElementById('receiptServiceName').innerText = order.order_name;
+                document.getElementById('receiptCustomerName').innerText = order.customer_name;
+                document.getElementById('receiptEmailOrNumber').innerText = order.customer_contact;
             });
-        reciptModal();
+        receiptModal();
     })
     .catch(error => {
         console.error('Error:', error);
     });
 }
 
-function closeReciptModal() {
-    document.getElementById('reciptModal').style.display = 'none';
+function closereceiptModal() {
+    document.getElementById('receiptModal').style.display = 'none';
 }
