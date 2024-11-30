@@ -93,12 +93,10 @@ app.delete('/deleteService/:id', async (req, res) => {
 
 app.post('/schedule', async (req, res) => {
     const { id } = req.body;
-
     const db = await dbPromise;
-	const service = await db.get('SELECT * FROM Services WHERE service_id = ?', [id]);
 
-    await db.run('INSERT INTO Orders (order_name, service_price, service_img) VALUES (?, ?, ?)', [service.service_name, service.service_price, service.service_img]);
-    console.log('Scheduled service:', req.body);
+	const service = await db.get('SELECT * FROM Services WHERE service_id = ?', [id]);
+    await db.run('INSERT INTO Orders (order_img, order_name, order_price) VALUES (?, ?, ?)', [service.service_img, service.service_name, service.service_price]);
     res.json({ message: 'Service scheduled successfully' });
 });
 

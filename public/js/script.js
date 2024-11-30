@@ -51,6 +51,7 @@ function openEditPanel() {
 
 //fetch
 function openServicePanel(serviceId) {
+    document.getElementById('panelServiceId').innerText = serviceId;
 	document.getElementById('servicePanel').style.display = 'block';
 	fetch(`/service/${serviceId}`)
 		.then(response => response.json())
@@ -63,10 +64,8 @@ function openServicePanel(serviceId) {
 }
 
 function optionSchedule() {
-    const serviceName = document.getElementById('panelServiceName').innerText;
-    const serviceDescription = document.getElementById('panelServiceDescription').innerText;
-    const servicePrice = document.getElementById('panelServicePrice').innerText;
     const panelId = document.getElementById('panelServiceId').innerText;
+    console.log(panelId);
 
     const data = {
         id: panelId

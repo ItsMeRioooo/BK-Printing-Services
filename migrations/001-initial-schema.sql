@@ -18,7 +18,7 @@ CREATE TABLE Orders (
     order_date DATE,
     order_price DECIMAL(10, 2),
     user_id INT,
-    test STRING
+    order_img STRING
 );
 
 -- Down

@@ -141,9 +141,6 @@ header {
     flex-direction: column;
 }
 
-#panelServiceId {
-    display: none;
-}
 
 .panel_content img {
     width: 100%;
@@ -247,6 +244,35 @@ nav ul li a {
 nav ul li a:hover {
     background-color: #111;
 }
+
+/* order list */
+.order_container {
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 0 20px;
+    background-color: #ddd;
+}
+
+.orders {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 0 20px;
+    gap: 20px; 
+    background-color: #333;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.order_img {
+    height: 50px;
+    margin: 5px;
+    border-radius: 10px;
+}
+
 
 @media screen and (max-width: 675px) {
     .services_container {

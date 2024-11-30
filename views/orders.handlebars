@@ -6,14 +6,25 @@
         <title>About Pge</title>
         <link rel="stylesheet" href="css/style.css"/>
     </head>
-    <body>
-        <h1></h1>
-        <p>Ordr.</p>
-        <a href="/">Go back to Home Page</a>
-        {{#each orders}}
+    <nav>
+        <h1 class="title">Orders</h1>
         <ul>
-            <li>{{test}}</li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/admin">Admin</a></li>
         </ul>
+    </nav>
+
+
+    <body>
+        <br>
+        {{#each orders}}
+        <div class="orders">
+            <img src="{{order_img}}" alt="" class="order_img">
+            <h3>{{order_id}}</h3>
+            <p>{{order_name}}</p>
+            <p>mm-dd-yyyy</p>
+            <p>state</p>
+        </div>
         {{/each}}
     </body>
 </html>
