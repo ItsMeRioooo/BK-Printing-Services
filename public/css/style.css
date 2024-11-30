@@ -141,6 +141,10 @@ header {
     flex-direction: column;
 }
 
+#panelServiceId {
+    display: none;
+}
+
 .panel_content img {
     width: 100%;
     height: auto;

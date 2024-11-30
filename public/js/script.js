@@ -66,11 +66,10 @@ function optionSchedule() {
     const serviceName = document.getElementById('panelServiceName').innerText;
     const serviceDescription = document.getElementById('panelServiceDescription').innerText;
     const servicePrice = document.getElementById('panelServicePrice').innerText;
+    const panelId = document.getElementById('panelServiceId').innerText;
 
     const data = {
-        name: serviceName,
-        description: serviceDescription,
-        price: servicePrice
+        id: panelId
     };
 
     fetch('/schedule', {

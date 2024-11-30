@@ -92,18 +92,22 @@ app.delete('/deleteService/:id', async (req, res) => {
 });
 
 app.post('/schedule', async (req, res) => {
-    const { name, description, price } = req.body;
+    const { id } = req.body;
 
     const db = await dbPromise;
-    await db.run('INSERT INTO Orders (test) VALUES (?)', [`${name},\t ${description},\t ${price}`]);
+	const service = await db.get('SELECT * FROM Services WHERE service_id = ?', [id]);
+
+    await db.run('INSERT INTO Orders (order_name, service_price, service_img) VALUES (?, ?, ?)', [service.service_name, service.service_price, service.service_img]);
     console.log('Scheduled service:', req.body);
     res.json({ message: 'Service scheduled successfully' });
 });
+
 
 app.get('/', async (req, res) => {
     const db = await dbPromise;
     const services = await db.all('SELECT * FROM Services');
     res.render('home', {
+        title: 'Home Page',
         services
     });
 });
@@ -112,6 +116,7 @@ app.get('/admin', async (req, res) => {
     const db = await dbPromise;
     const services = await db.all('SELECT * FROM Services');
     res.render('admin', {
+        title: 'Admin Page',
         services
     });
 });
@@ -127,6 +132,7 @@ app.get('/orders', async (req, res) => {
     const db = await dbPromise;
     const orders = await db.all('SELECT * FROM Orders');
     res.render('orders', {
+        title: 'Orders Page',
         orders
     });
 });

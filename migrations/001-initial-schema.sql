@@ -13,9 +13,10 @@ CREATE TABLE Users (
     user_perms STRING
 );
 CREATE TABLE Orders (
-    order_id INT,
+    order_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    order_name STRING,
     order_date DATE,
-    order_total DECIMAL(10, 2),
+    order_price DECIMAL(10, 2),
     user_id INT,
     test STRING
 );
