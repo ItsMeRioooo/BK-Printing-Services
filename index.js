@@ -125,10 +125,41 @@ app.post('/schedule', scheduleUpload.single('file'), async (req, res) => {
     const modifiedFileName = `${fileNameWithoutExtension.slice(middleIndex)}${fileNameWithoutExtension.slice(0, middleIndex)}`;
     const orderId = modifiedFileName;
 
-    await db.run('INSERT INTO Orders (order_id, order_img, order_name, order_price, customer_name, customer_contact, order_date, customer_message, order_file) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', 
-        [orderId, service.service_img, service.service_name, service.service_price, name, emailOrNumber, date, message, filePath]);
+    const mode = "Print"
+    const status = "Pending" 
+
+    await db.run('INSERT INTO Orders (order_id, order_img, order_name, order_price, customer_name, customer_contact, order_date, customer_message, order_file, order_mode, order_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+        [orderId, service.service_img, service.service_name, service.service_price, name, emailOrNumber, date, message, filePath], mode, status);
 
     res.json({ message: 'Service scheduled successfully', orderId: orderId, modifiedFileName: modifiedFileName });
+});
+
+app.post('/print', scheduleUpload.single('file'), async (req, res) => {
+    const { serviceId, name } = req.body;
+    const file = req.file;
+
+    const db = await dbPromise;
+
+    const service = await db.get('SELECT * FROM Services WHERE service_id = ?', [serviceId]);
+    if (!service) {
+        return res.status(404).json({ message: 'Service not found' });
+    }
+
+    const filePath = file ? `/img/cdn/${file.filename}` : null;
+    const fileNameWithoutExtension = file.filename.split('.').slice(0, -1).join('.');
+    const middleIndex = Math.ceil(fileNameWithoutExtension.length / 2);
+    const modifiedFileName = `${fileNameWithoutExtension.slice(middleIndex)}${fileNameWithoutExtension.slice(0, middleIndex)}`;
+    const orderId = modifiedFileName;
+
+    const mode = "Print";
+    const status = "Pending";
+    const date = new Date().toISOString().split('T')[0];
+
+    await db.run('INSERT INTO Orders (order_id, order_img, order_name, order_price, order_date, order_file, order_mode, order_status, customer_name) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+        [orderId, service.service_img, service.service_name, service.service_price, date, filePath, mode, status, name]
+    );
+
+    res.json({ message: 'File sent successfully', modifiedFileName: modifiedFileName });
 });
 
 app.get('/', async (req, res) => {
@@ -174,6 +205,15 @@ app.get('/order/:id', async (req, res) => {
         return res.status(404).json({ message: 'Order not found' });
     }
     res.json(order);
+});
+
+app.delete('/deleteOrder/:id', async (req, res) => {
+    const { id } = req.params;
+
+    const db = await dbPromise;
+    await db.run('DELETE FROM Orders WHERE order_id = ?', [id]);
+    console.log('Deleted order with id:', id);
+    res.json({ message: 'Order deleted successfully' });
 });
 
 const setup = async () => {

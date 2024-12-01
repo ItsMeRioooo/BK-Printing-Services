@@ -24,12 +24,24 @@ function closeScheduleModal() {
     document.getElementById('serviceModal').style.display = 'block';
 }
 
+function openPrintModal() {
+    document.getElementById('printModal').style.display = 'block';
+    document.getElementById('serviceModal').style.display = 'none';
+}
+function closeScheduleModal() {
+    document.getElementById('printModa').style.display = 'none';
+    document.getElementById('serviceModal').style.display = 'block';
+}
+
 function scheduleReceiptModal() {
     document.getElementById('scheduleModal').style.display = 'none';
     document.getElementById('scheduleReceiptModal').style.display = 'block';
 }
-function closeReceiptModal() {
+
+function closeScheduleReceipt() {
     document.getElementById('scheduleReceiptModal').style.display = 'none';
+    location.reload();
+
 }
 
 document.addEventListener('keydown', function(event) {
@@ -37,13 +49,14 @@ document.addEventListener('keydown', function(event) {
         closeServiceModal();
         if (document.getElementById('scheduleModal').style.display == 'block') {
             closeScheduleModal();
+            closeScheduleReceipt();
         }
     }
 });
 
 
-function scheduleService(event) {
-    event.preventDefault();
+function scheduleService(event) { 
+    event.preventDefault(); 
 
     const serviceId = document.getElementById('modalServiceId').innerText;
     const name = document.getElementById('scheduleName').value;
@@ -67,7 +80,7 @@ function scheduleService(event) {
     })
     .then(response => response.json())
     .then(data => {
-        const orderId = data.modifiedFileName; // Assuming the server returns the modifiedFileName
+        const orderId = data.modifiedFileName; 
         console.log('Modified File Name:', orderId);
         fetch(`/order/${orderId}`)
             .then(response => response.json())
@@ -86,6 +99,49 @@ function scheduleService(event) {
     });
 }
 
-function closeReceiptModal() {
-    document.getElementById('scheduleReceiptModal').style.display = 'none';
+function printService(event) {
+    event.preventDefault();
+
+    const serviceId = document.getElementById('modalServiceId').innerText;
+    const name = document.getElementById('printName').value;
+    const fileInput = document.getElementById('printFile');
+    const file = fileInput.files[0];
+
+    const formData = new FormData();
+    formData.append('serviceId', serviceId);
+    formData.append('name', name);
+    formData.append('file', file);
+
+    fetch('/print', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        const orderId = data.modifiedFileName;
+        console.log('Modified File Name:', orderId);
+        fetch(`/order/${orderId}`)
+            .then(response => response.json())
+            .then(order => {
+                console.log('Order:', order);
+                document.getElementById('printReceiptOrderId').innerText = order.order_id;
+                document.getElementById('printReceiptServiceName').innerText = order.order_name;
+                document.getElementById('printReceiptCustomerName').innerText = order.customer_name;
+                document.getElementById('printReceiptDate').innerText = order.order_date;
+            });
+        openPrintReceipt();
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+function openPrintReceipt() {
+    document.getElementById('printReceiptModal').style.display = 'block';
+    document.getElementById('printModal').style.display = 'none';
+}
+
+function closePrintReceipt() {
+    document.getElementById('printReceiptModal').style.display = 'none';
+    location.reload();
 }

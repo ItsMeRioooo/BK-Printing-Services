@@ -5,15 +5,45 @@
         <li><a href="/admin">Admin</a></li>
     </ul>
 </nav>
+<br><br><br><br><br><br><br>
 <body>
-    <br>
+    {{!-- <div class="orders" id="orderIndicator">
+        <h3>Refrence Id</h3>
+        <p>Service Name</p>
+        <p>Date</p>
+        <p>Status</p>
+    </div>      --}}
     {{#each orders}}
-    <div class="orders">
+    <div class="orders" onclick="openOrderModal({{order_id}})">
         <h3>#{{order_id}}</h3>
-        <img src="{{order_img}}" alt="" class="order_img">
         <p>{{order_name}}</p>
         <p>{{order_date}}</p>
         <p>state</p>
     </div>
     {{/each}}
+
+    
+
+    <div class="modal" id="orderModal">
+        <div class="modal_container">
+            <div class="modal_content">
+                <div class="close_btn">
+                    <i class='bx bx-x-circle' onclick="closeOrderModal()"></i>
+                </div>
+                <h3 id="modalOrderReferenceId"></h3>
+                <p id="modalOrderName"></p>
+                <p id="modalOrderDate"></p>
+                <p id="modalCustomerNamne"></p>
+                <p id="modalCustomerContact"></p>
+                <p id="modalStatus"></p>
+                <p id="modalOrderMode"></p>
+                <div class="button_container">
+                    <p id="modalOrderId"></p>
+                    <button class="option_schedule" onclick="pirntOrder()">Print Order</button>
+                    <button class="option_print" onclick="deleteOrder()">Delete Order</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/orders.js"></script>
 </body>

@@ -100,8 +100,7 @@ function editService(event) {
     .then(response => response.json())
     .then(data => {
         console.log('Success:', data);
-        // Reload the page to reflect the updated service
-        window.location.reload();
+        location.reload();
     })
     .catch((error) => {
         console.error('Error:', error);
@@ -117,7 +116,7 @@ function deleteService() {
     .then(response => response.json())
     .then(data => {
         console.log('Success:', data);
-        window.location.reload();
+        location.reload();
     })
     .catch((error) => {
         console.error('Error:', error);

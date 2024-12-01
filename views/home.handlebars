@@ -36,7 +36,7 @@
 				<div class="button_container">
 					<p id="modalServiceId"></p>
 					<button class="option_schedule" onclick="openScheduleModal()">Schedule</button>
-					<button class="option_print" onclick="optionPrint">Print</button>
+					<button class="option_print" onclick="openPrintModal()">Print</button>
 				</div>	
 			</div>
 		</div>
@@ -85,12 +85,6 @@
 					<label for="printName">Name:</label><br>
 					<input type="text" id="printName" required>
 					<br><br>
-					<label for="printEmailOrNumber">Email or Number:</label><br>
-					<input type="text" id="printEmailOrNumber" required>
-					<br><br>
-					<label for="printMessage">Message:</label><br>
-					<textarea id="printMessage" required></textarea>
-					<br><br>
 					<label for="printFile">Upload File:</label><br>
 					<input type="file" id="printFile" placeholder="Upload File" required>
 					<br><br>
@@ -107,7 +101,7 @@
 	    <div class="modal_container">
 	        <div class="modal_content">
 	            <div class="close_btn">
-	                <i class='bx bx-x-circle' onclick="closereceiptModal()"></i>
+	                <i class='bx bx-x-circle' onclick="closeScheduleReceipt()"></i>
 	            </div>
 	            <h3>Receipt</h3>
 	            <p><strong>Reference Id:</strong> <span id="receiptOrderId"></span></p>
@@ -118,6 +112,21 @@
 	        </div>
 	    </div>
 	</div>
+
+{{!-- not working --}}
+	<div class="modal" id="printReceiptModal">
+	    <div class="modal_container">
+	        <div class="modal_content">
+	            <div class="close_btn">
+	                <i class='bx bx-x-circle' onclick="closePrintReceipt()"></i>
+	            </div>
+	            <h3>Receipt</h3>
+	            <p><strong>Reference Id:</strong> <span id="printReceiptOrderId"></span></p>
+	            <p><strong>Service Name:</strong> <span id="printReceiptServiceName"></span></p>
+	            <p><strong>Customer Name:</strong> <span id="printReceiptCustomerName"></span></p>
+	            <p><strong>Contact:</strong> <span id="printReceiptDate"></span></p>
+	        </div>
+	    </div>
 
 </div>
 <script src="js/home.js"></script>

@@ -20,8 +20,10 @@ CREATE TABLE Orders (
     customer_name STRING,
     customer_contact STRING,
     customer_message STRING,
-    order_file STRING, -- Path to the file
-    order_img STRING
+    order_file STRING, 
+    order_img STRING,
+    order_mode STRING,
+    order_status STRING
 );
 
 -- Down
