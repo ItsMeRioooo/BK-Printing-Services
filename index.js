@@ -120,9 +120,7 @@ app.post('/schedule', scheduleUpload.single('file'), async (req, res) => {
     }
 
     const filePath = file ? `/img/cdn/${file.filename}` : null;
-    
     const fileNameWithoutExtension = file.filename.split('.').slice(0, -1).join('.');
-
     const middleIndex = Math.ceil(fileNameWithoutExtension.length / 2);
     const modifiedFileName = `${fileNameWithoutExtension.slice(middleIndex)}${fileNameWithoutExtension.slice(0, middleIndex)}`;
     const orderId = modifiedFileName;
@@ -130,7 +128,7 @@ app.post('/schedule', scheduleUpload.single('file'), async (req, res) => {
     await db.run('INSERT INTO Orders (order_id, order_img, order_name, order_price, customer_name, customer_contact, order_date, customer_message, order_file) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', 
         [orderId, service.service_img, service.service_name, service.service_price, name, emailOrNumber, date, message, filePath]);
 
-    res.json({ message: 'Service scheduled successfully' });
+    res.json({ message: 'Service scheduled successfully', orderId: orderId, modifiedFileName: modifiedFileName });
 });
 
 app.get('/', async (req, res) => {
@@ -169,6 +167,7 @@ app.get('/orders', async (req, res) => {
 
 app.get('/order/:id', async (req, res) => {
     const { id } = req.params;
+    
     const db = await dbPromise;
     const order = await db.get('SELECT * FROM Orders WHERE order_id = ?', [id]);
     if (!order) {

@@ -24,12 +24,12 @@ function closeScheduleModal() {
     document.getElementById('serviceModal').style.display = 'block';
 }
 
-function receiptModal() {
+function scheduleReceiptModal() {
     document.getElementById('scheduleModal').style.display = 'none';
-    document.getElementById('receiptModal').style.display = 'block';
+    document.getElementById('scheduleReceiptModal').style.display = 'block';
 }
-function closereceiptModal() {
-    document.getElementById('receiptModal').style.display = 'none';
+function closeReceiptModal() {
+    document.getElementById('scheduleReceiptModal').style.display = 'none';
 }
 
 document.addEventListener('keydown', function(event) {
@@ -67,23 +67,25 @@ function scheduleService(event) {
     })
     .then(response => response.json())
     .then(data => {
-        const orderId = data.orderId; // Assuming the server returns the orderId
-        console.log('Order ID:', orderId);
+        const orderId = data.modifiedFileName; // Assuming the server returns the modifiedFileName
+        console.log('Modified File Name:', orderId);
         fetch(`/order/${orderId}`)
             .then(response => response.json())
             .then(order => {
+                console.log('Order:', order);
                 document.getElementById('receiptOrderId').innerText = order.order_id;
                 document.getElementById('receiptServiceName').innerText = order.order_name;
                 document.getElementById('receiptCustomerName').innerText = order.customer_name;
                 document.getElementById('receiptEmailOrNumber').innerText = order.customer_contact;
+                document.getElementById('receiptDate').innerText = order.order_date;
             });
-        receiptModal();
+        scheduleReceiptModal();
     })
     .catch(error => {
         console.error('Error:', error);
     });
 }
 
-function closereceiptModal() {
-    document.getElementById('receiptModal').style.display = 'none';
+function closeReceiptModal() {
+    document.getElementById('scheduleReceiptModal').style.display = 'none';
 }
