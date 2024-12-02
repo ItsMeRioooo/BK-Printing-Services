@@ -3,6 +3,8 @@
     <ul>
         <li><a href="/">Home</a></li>
         <li><a href="/admin">Admin</a></li>
+        <li><a href="/orders">Orders</a></li>
+        <li><a href="/history">History</a></li>
     </ul>
 </nav>
 <br><br><br><br><br><br><br>
@@ -15,10 +17,10 @@
     </div>      --}}
     {{#each orders}}
     <div class="orders" onclick="openOrderModal({{order_id}})">
-        <h3>#{{order_id}}</h3>
-        <p>{{order_name}}</p>
-        <p>{{order_date}}</p>
-        <p>state</p>
+        <div><h3>#{{order_id}}</h3></div>
+        <div><p>{{order_name}}</p></div>
+        <div><p>{{order_date}}</p></div>
+        <div><p>{{order_mode}}</p></div>
     </div>
     {{/each}}
 
@@ -35,12 +37,33 @@
                 <p id="modalOrderDate"></p>
                 <p id="modalCustomerNamne"></p>
                 <p id="modalCustomerContact"></p>
-                <p id="modalStatus"></p>
                 <p id="modalOrderMode"></p>
+                <p id="modalOrderStatus"></p>
+                <p id="modalOrderFile"></p>
                 <div class="button_container">
-                    <p id="modalOrderId"></p>
-                    <button class="option_schedule" onclick="pirntOrder()">Print Order</button>
-                    <button class="option_print" onclick="deleteOrder()">Delete Order</button>
+                    <button class="option_print" onclick="printOrder()">Print Order</button>
+                    <button class="option_delete" onclick="deleteOrder()">Delete Order</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="printOrderModal">
+        <div class="modal_container">
+            <div class="modal_content">
+                <h3>Order Details</h3>
+                <p><strong>Reference Id:</strong> <span id="printOrderReferenceId"></span></p>
+                <p><strong>Service Name:</strong> <span id="printOrderName"></span></p>
+                <p><strong>Date:</strong> <span id="printOrderDate"></span></p>
+                <p><strong>Customer Name:</strong> <span id="printCustomerName"></span></p>
+                <p><strong>Contact:</strong> <span id="printCustomerContact"></span></p>
+                <p><strong>Mode:</strong> <span id="printOrderMode"></span></p>
+                <p><strong>Status:</strong> <span id="printOrderStatus"></span></p>
+                <p><strong>File:</strong> <span id="printOrderFile"></span></p>
+                <p><strong>Message:</strong> <span id="printOrderMessage"></span></p>
+                <div class="button_container">
+                    <button class="confirm_print" onclick="confirmPrint()">Confirm Print</button>
+                    <button class="close_print" onclick="closePrintOrderModal()">Close</button>
                 </div>
             </div>
         </div>

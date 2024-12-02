@@ -125,11 +125,11 @@ app.post('/schedule', scheduleUpload.single('file'), async (req, res) => {
     const modifiedFileName = `${fileNameWithoutExtension.slice(middleIndex)}${fileNameWithoutExtension.slice(0, middleIndex)}`;
     const orderId = modifiedFileName;
 
-    const mode = "Print"
+    const mode = "Schedule";
     const status = "Pending" 
 
     await db.run('INSERT INTO Orders (order_id, order_img, order_name, order_price, customer_name, customer_contact, order_date, customer_message, order_file, order_mode, order_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
-        [orderId, service.service_img, service.service_name, service.service_price, name, emailOrNumber, date, message, filePath], mode, status);
+        [orderId, service.service_img, service.service_name, service.service_price, name, emailOrNumber, date, message, filePath, mode, status]);
 
     res.json({ message: 'Service scheduled successfully', orderId: orderId, modifiedFileName: modifiedFileName });
 });
@@ -162,12 +162,38 @@ app.post('/print', scheduleUpload.single('file'), async (req, res) => {
     res.json({ message: 'File sent successfully', modifiedFileName: modifiedFileName });
 });
 
+app.post('/confirmPrint/:id', async (req, res) => {
+    const { id } = req.params;
+
+    const db = await dbPromise;
+    const order = await db.get('SELECT * FROM Orders WHERE order_id = ?', [id]);
+    if (!order) {
+        return res.status(404).json({ message: 'Order not found' });
+    }
+
+    await db.run('INSERT INTO History (order_id, order_name, order_date, order_price, customer_name, customer_contact, customer_message, order_file, order_img, order_mode, order_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', 
+        [order.order_id, order.order_name, order.order_date, order.order_price, order.customer_name, order.customer_contact, order.customer_message, order.order_file, order.order_img, order.order_mode, order.order_status]);
+
+    await db.run('DELETE FROM Orders WHERE order_id = ?', [id]);
+    console.log('Moved order to history and deleted from orders:', id);
+    res.json({ message: 'Order moved to history successfully' });
+});
+
 app.get('/', async (req, res) => {
     const db = await dbPromise;
     const services = await db.all('SELECT * FROM Services');
     res.render('home', {
         title: 'Home Page',
         services
+    });
+});
+
+app.get('/history', async (req, res) => {
+    const db = await dbPromise;
+    const history = await db.all('SELECT * FROM History ORDER BY order_date ASC');
+    res.render('history', {
+        title: 'History',
+        history
     });
 });
 
