@@ -29,7 +29,7 @@ function openPrintModal() {
     document.getElementById('serviceModal').style.display = 'none';
 }
 function closeScheduleModal() {
-    document.getElementById('printModa').style.display = 'none';
+    document.getElementById('scheduleModal').style.display = 'none';
     document.getElementById('serviceModal').style.display = 'block';
 }
 
