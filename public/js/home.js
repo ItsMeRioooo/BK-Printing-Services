@@ -49,7 +49,12 @@ document.addEventListener('keydown', function(event) {
         closeServiceModal();
         if (document.getElementById('scheduleModal').style.display == 'block') {
             closeScheduleModal();
+        }
+        if (document.getElementById('scheduleReceiptModal').style.display == 'block') {
             closeScheduleReceipt();
+        }d
+        if (document.getElementById('printReceiptModal').style.display == 'block') {
+            closePrintReceipt();
         }
     }
 });
