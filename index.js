@@ -121,9 +121,7 @@ app.post('/schedule', scheduleUpload.single('file'), async (req, res) => {
 
     const filePath = file ? `/img/cdn/${file.filename}` : null;
     const fileNameWithoutExtension = file.filename.split('.').slice(0, -1).join('.');
-    const middleIndex = Math.ceil(fileNameWithoutExtension.length / 2);
-    const modifiedFileName = `${fileNameWithoutExtension.slice(middleIndex)}${fileNameWithoutExtension.slice(0, middleIndex)}`;
-    const orderId = modifiedFileName;
+    const orderId = fileNameWithoutExtension;
 
     const mode = "Schedule";
     const status = "Pending" 
@@ -146,9 +144,7 @@ app.post('/print', scheduleUpload.single('file'), async (req, res) => {
     }
 
     const filePath = file ? `/img/cdn/${file.filename}` : null;
-    const fileNameWithoutExtension = file.filename.split('.').slice(0, -1).join('.');
-    const middleIndex = Math.ceil(fileNameWithoutExtension.length / 2);
-    const modifiedFileName = `${fileNameWithoutExtension.slice(middleIndex)}${fileNameWithoutExtension.slice(0, middleIndex)}`;
+    const modifiedFileName = file.filename.split('.').slice(0, -1).join('.');
     const orderId = modifiedFileName;
 
     const mode = "Print";
@@ -231,6 +227,17 @@ app.get('/order/:id', async (req, res) => {
         return res.status(404).json({ message: 'Order not found' });
     }
     res.json(order);
+});
+
+app.get('/history/:id', async (req, res) => {
+    const { id } = req.params;
+
+    const db = await dbPromise
+    const history = await db.get('SELECT * FROM History WHERE order_id = ?', [id]);
+    if (!history) {
+        return res.status(404).json({ messaga: 'History not found'})
+    }
+    res.json(history)
 });
 
 app.delete('/deleteOrder/:id', async (req, res) => {

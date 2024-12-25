@@ -8,18 +8,39 @@
     </ul>
 </nav>
 <br><br><br><br><br><br><br>
-<body>
-    {{!-- <div class="orders" id="orderIndicator">
-        <h3>Refrence Id</h3>
-        <p>Service Name</p>
-        <p>Date</p>
-        <p>Status</p>
-    </div>      --}}
-    {{#each history}}
-    <div class="orders">
-        <div><h3>#{{order_id}}</h3></div>
-        <div><p>{{order_name}}</p></div>
-        <div><p>{{order_date}}</p></div>
-        <div><p>{{order_mode}}</p></div>
+
+{{!-- <div class="orders" id="orderIndicator">
+    <h3>Refrence Id</h3>
+    <p>Service Name</p>
+    <p>Date</p>
+    <p>Status</p>
+</div>      --}}
+{{#each history}}
+<div class="orders" onclick="openHistoryModal({{order_id}})">
+    <div><h3>#{{order_id}}</h3></div>
+    <div><p>{{order_name}}</p></div>
+    <div><p>{{order_date}}</p></div>
+    <div><p>{{order_mode}}</p></div>
+</div>
+{{/each}}
+
+<div class="modal" id="historyModal">
+    <div class="modal_container">
+        <div class="modal_content">
+            <h3>Order Details</h3>
+            <p><strong>Reference Id:</strong> <span id="historyReferenceId"></span></p>
+            <p><strong>Service Name:</strong> <span id="historyName"></span></p>
+            <p><strong>Date:</strong> <span id="historyOrderDate"></span></p>
+            <p><strong>Customer Name:</strong> <span id="historyCustomerName"></span></p>
+            <p><strong>Contact:</strong> <span id="historyCustomerContact"></span></p>
+            <p><strong>Mode:</strong> <span id="historyOrderMode"></span></p>
+            <p><strong>File:</strong> <span id="historyOrderFile"></span></p>
+            <p><strong>Message:</strong> <span id="historyOrderMessage"></span></p>
+            <div class="button_container">
+                <button class="close_print" onclick="closeHistoryModal()">Close</button>
+            </div>
+        </div>
     </div>
-    {{/each}}
+</div>
+
+<script src="js/history.js"></script>

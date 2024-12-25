@@ -9,9 +9,6 @@ function openOrderModal(orderId) {
             document.getElementById('modalOrderDate').innerText = data.order_date;
             document.getElementById('modalCustomerNamne').innerText = data.customer_name;
             document.getElementById('modalCustomerContact').innerText = data.customer_contact;
-            // document.getElementById('modalStatus').innerText = data.message;
-            // document.getElementById('orderDetailsFile').innerText = data.file;
-            // document.getElementById('modalOrderMode').innerText = data.status;
         });
 }
 function closeOrderModal() {
@@ -56,7 +53,6 @@ function printOrder() {
             document.getElementById('printCustomerName').innerText = data.customer_name;
             document.getElementById('printCustomerContact').innerText = data.customer_contact;
             document.getElementById('printOrderMode').innerText = data.order_mode;
-            document.getElementById('printOrderStatus').innerText = data.order_status;
             document.getElementById('printOrderFile').innerHTML = `<a href="${data.order_file}" target="_blank">Open File</a>`;
             document.getElementById('printOrderMessage').innerText = data.customer_message;
         })
@@ -85,4 +81,8 @@ function confirmPrint() {
 function closePrintOrderModal() {
     document.getElementById('printOrderModal').style.display = 'none';
     document.getElementById('orderModal').style.display = 'block';
+}
+
+function orderSearch(event) {
+    
 }
