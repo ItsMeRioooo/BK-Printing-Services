@@ -82,7 +82,3 @@ function closePrintOrderModal() {
     document.getElementById('printOrderModal').style.display = 'none';
     document.getElementById('orderModal').style.display = 'block';
 }
-
-function orderSearch(event) {
-    
-}

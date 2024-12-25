@@ -15,10 +15,6 @@
     <p>Date</p>
     <p>Status</p>
 </div>      --}}
-<form class="search" onsubmit="orderSearch(event)">
-    <input type="text" id="searchBar" required>
-    <button type="submit">Search</button>
-</form>
 
 {{#each orders}}
 <div class="orders" onclick="openOrderModal({{order_id}})">
