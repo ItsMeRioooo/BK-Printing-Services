@@ -1,5 +1,8 @@
 <nav>
-    <h1 class="title">Orders</h1>
+    <div class="nav-container">
+        <h1 class="title">Orders</h1>
+        <input type="text" id="searchBar" placeholder="Search orders..." onkeyup="filterOrders()">
+    </div>
     <ul>
         <li><a href="/">Home</a></li>
         <li><a href="/admin">Admin</a></li>
@@ -9,23 +12,16 @@
 </nav>
 <br><br><br><br><br><br><br>
 
-{{!-- <div class="orders" id="orderIndicator">
-    <h3>Refrence Id</h3>
-    <p>Service Name</p>
-    <p>Date</p>
-    <p>Status</p>
-</div>      --}}
-
-{{#each orders}}
-<div class="orders" onclick="openOrderModal({{order_id}})">
-    <div><h3>#{{order_id}}</h3></div>
-    <div><p>{{order_name}}</p></div>
-    <div><p>{{order_date}}</p></div>
-    <div><p>{{order_mode}}</p></div>
+<div id="ordersContainer">
+    {{#each orders}}
+    <div class="orders" onclick="openOrderModal({{order_id}})">
+        <div><h3>#{{order_id}}</h3></div>
+        <div><p>{{order_name}}</p></div>
+        <div><p>{{order_date}}</p></div>
+        <div><p>{{order_mode}}</p></div>
+    </div>
+    {{/each}}
 </div>
-{{/each}}
-
-
 
 <div class="modal" id="orderModal">
     <div class="modal_container">
@@ -69,4 +65,3 @@
     </div>
 </div>
 <script src="js/orders.js"></script>
-

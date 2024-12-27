@@ -249,6 +249,21 @@ app.delete('/deleteOrder/:id', async (req, res) => {
     res.json({ message: 'Order deleted successfully' });
 });
 
+app.get('/searchOrders', async (req, res) => {
+    const { q } = req.query;
+    const db = await dbPromise;
+    const orders = await db.all(
+        `SELECT * FROM Orders
+         WHERE order_id LIKE ?
+         OR order_name LIKE ?
+         OR order_date LIKE ?
+         OR order_mode LIKE ?
+         OR customer_name LIKE ?`,
+        [`%${q}%`, `%${q}%`, `%${q}%`, `%${q}%`, `%${q}%`]
+    );
+    res.json(orders);
+});
+
 const setup = async () => {
     const db = await dbPromise;
     await db.migrate({ migrationsPath: path.join(__dirname, 'migrations') });

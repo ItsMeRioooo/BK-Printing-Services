@@ -225,6 +225,12 @@ nav {
     width: 100vw;
 }
 
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 nav ul {
     list-style-type: none;
     margin: 0;
@@ -290,7 +296,24 @@ nav ul li a:hover {
 #orderIndicator {
     position: sticky;
     top: 130px
+}
 
+#notFound {
+    text-align: center;
+    margin: 20px;
+    padding: 20px;
+    background-color: #333;
+    color: #fff;
+    border-radius: 10px;
+}
+
+#searchBar {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #333;
+    margin-left: auto;
+    margin-right: 30px;
+    
 }
 
 /* admin */

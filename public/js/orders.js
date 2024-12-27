@@ -11,6 +11,7 @@ function openOrderModal(orderId) {
             document.getElementById('modalCustomerContact').innerText = data.customer_contact;
         });
 }
+
 function closeOrderModal() {
     document.getElementById('orderModal').style.display = 'none';
 }
@@ -81,4 +82,46 @@ function confirmPrint() {
 function closePrintOrderModal() {
     document.getElementById('printOrderModal').style.display = 'none';
     document.getElementById('orderModal').style.display = 'block';
+}
+
+function filterOrders() {
+    document.getElementById('searchBar').addEventListener('input', () => {
+        const searchInput = document.getElementById('searchBar').value.toLowerCase();
+        console.log('Search Input:', searchInput);
+    
+        fetch(`/searchOrders?q=${encodeURIComponent(searchInput)}`) 
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch orders');
+                }
+                return response.json();
+            })
+            .then(orders => {
+                const ordersContainer = document.getElementById('ordersContainer');
+                ordersContainer.innerHTML = '';
+    
+                if (orders.length === 0) {
+                    ordersContainer.innerHTML = '<p id="notFound">No orders found.</p>';
+                    return;
+                }
+    
+                orders.forEach(order => {
+                    const orderElement = document.createElement('div');
+                    orderElement.classList.add('orders');
+                    orderElement.setAttribute('onclick', `openOrderModal(${order.order_id})`);
+                    orderElement.innerHTML = `
+                        <div><h3>#${order.order_id}</h3></div>
+                        <div><p>${order.order_name}</p></div>
+                        <div><p>${order.order_date}</p></div>
+                        <div><p>${order.order_mode}</p></div>
+                    `;
+                    ordersContainer.appendChild(orderElement);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                const ordersContainer = document.getElementById('ordersContainer');
+                ordersContainer.innerHTML = '<p>Failed to load orders. Please try again later.</p>';
+            });
+    });
 }
