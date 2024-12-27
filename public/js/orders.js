@@ -101,7 +101,7 @@ function filterOrders() {
                 ordersContainer.innerHTML = '';
     
                 if (orders.length === 0) {
-                    ordersContainer.innerHTML = '<p id="notFound">No orders found.</p>';
+                    ordersContainer.innerHTML = `<p id="notFound">No results found for "${searchInput}".</p>`;
                     return;
                 }
     
