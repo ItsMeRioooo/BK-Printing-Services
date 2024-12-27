@@ -257,7 +257,7 @@ app.get('/searchOrders', async (req, res) => {
          WHERE order_id LIKE ?
          OR order_name LIKE ?
          OR order_date LIKE ?
-         OR order_mode LIKE ?
+         OR customer_contact LIKE ?
          OR customer_name LIKE ?`,
         [`%${q}%`, `%${q}%`, `%${q}%`, `%${q}%`, `%${q}%`]
     );
