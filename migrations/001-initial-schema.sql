@@ -42,8 +42,16 @@ CREATE TABLE History (
     order_status STRING
 );
 
+CREATE TABLE Admins (
+    admin_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    admin_name STRING,
+    admin_email STRING,
+    admin_password STRING
+);
+
 -- Down
 DROP TABLE services;
 DROP TABLE users;
 DROP TABLE orders;
 DROP TABLE history;
+DROP TABLE admins;

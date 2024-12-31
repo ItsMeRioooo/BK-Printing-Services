@@ -8,6 +8,7 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import { engine } from 'express-handlebars';
 import fs from 'fs';
+import session from 'express-session';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -23,7 +24,13 @@ app.set('view engine', 'handlebars');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+    secret: 'your_secret_key',
+    resave: false,
+    saveUninitialized: true
+}));
 
 const adminStorage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -50,6 +57,62 @@ const scheduleStorage = multer.diskStorage({
 });
 
 const scheduleUpload = multer({ storage: scheduleStorage });
+
+// Middleware to check if the user is logged in as admin
+function isAdmin(req, res, next) {
+    if (req.session.isAdmin) {
+        return next();
+    } else {
+        res.redirect('/login');
+    }
+}
+
+// Admin login route
+app.get('/login', (req, res) => {
+    res.render('login', { title: 'Admin Login' });
+});
+
+app.post('/login', async (req, res) => {
+    const { username, password } = req.body;
+    const db = await dbPromise;
+    const admin = await db.get('SELECT * FROM Users WHERE user_name = ? AND user_password = ? AND user_perms = "admin"', [username, password]);
+    if (admin) {
+        req.session.isAdmin = true;
+        res.redirect('/admin');
+    } else {
+        res.render('login', { title: 'Admin Login', error: 'Invalid credentials' });
+    }
+});
+
+// Admin page route
+app.get('/admin', isAdmin, async (req, res) => {
+    const db = await dbPromise;
+    const services = await db.all('SELECT * FROM Services');
+    res.render('admin', {
+        title: 'Admin Page',
+        services
+    });
+});
+
+// Orders page route
+app.get('/orders', isAdmin, async (req, res) => {
+    const db = await dbPromise;
+    const orders = await db.all('SELECT * FROM Orders');
+    res.render('orders', {
+        title: 'Orders Page',
+        orders
+    });
+});
+
+// History page route
+app.get('/history', isAdmin, async (req, res) => {
+    const db = await dbPromise;
+    const history = await db.all('SELECT * FROM History');
+    res.render('history', {
+        title: 'History Page',
+        history
+    });
+});
 
 app.post('/addService', adminUpload.single('serviceImage'), async (req, res) => {
     const { serviceName, serviceDescription, servicePrice } = req.body;
@@ -184,7 +247,7 @@ app.get('/', async (req, res) => {
     });
 });
 
-app.get('/history', async (req, res) => {
+app.get('/history', isAdmin, async (req, res) => {
     const db = await dbPromise;
     const history = await db.all('SELECT * FROM History ORDER BY order_date ASC');
     res.render('history', {
@@ -193,7 +256,7 @@ app.get('/history', async (req, res) => {
     });
 });
 
-app.get('/admin', async (req, res) => {
+app.get('/admin', isAdmin, async (req, res) => {
     const db = await dbPromise;
     const services = await db.all('SELECT * FROM Services');
     res.render('admin', {
@@ -209,7 +272,7 @@ app.get('/service/:id', async (req, res) => {
     res.json(service);
 });
 
-app.get('/orders', async (req, res) => {
+app.get('/orders', isAdmin, async (req, res) => {
     const db = await dbPromise;
     const orders = await db.all('SELECT * FROM Orders ORDER BY order_date ASC');
     res.render('orders', {
