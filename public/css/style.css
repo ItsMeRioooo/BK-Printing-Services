@@ -343,7 +343,7 @@ nav ul li a:hover {
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    text-align: left;
 }
 
 .login-container h1 {
@@ -352,7 +352,7 @@ nav ul li a:hover {
 
 .login-container label {
     display: block;
-    margin: 10px 0 5px;
+    margin: 10px 10px 5px 5px;
 }
 
 .login-container input {
@@ -361,6 +361,7 @@ nav ul li a:hover {
     margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    box-sizing: border-box;
 }
 
 .login-container button {

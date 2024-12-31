@@ -75,7 +75,10 @@ app.get('/login', (req, res) => {
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
     const db = await dbPromise;
-    const admin = await db.get('SELECT * FROM Users WHERE user_name = ? AND user_password = ? AND user_perms = "admin"', [username, password]);
+    const admin = await db.get(
+        'SELECT * FROM Users WHERE (user_name = ? OR user_email = ?) AND user_password = ? AND user_perms = "admin"',
+        [username, username, password]
+    );
     if (admin) {
         req.session.isAdmin = true;
         res.redirect('/admin');

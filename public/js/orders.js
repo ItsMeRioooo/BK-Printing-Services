@@ -3,12 +3,12 @@ function openOrderModal(orderId) {
     fetch(`/order/${orderId}`)
         .then(response => response.json())
         .then(data => {
-            console.log('Order data:', data);
+            console.log('Order data:', data.order_mode);
             document.getElementById('modalOrderReferenceId').innerText = '#' + data.order_id;
             document.getElementById('modalOrderName').innerText = data.order_name;
             document.getElementById('modalOrderDate').innerText = data.order_date;
             document.getElementById('modalCustomerNamne').innerText = data.customer_name;
-            document.getElementById('modalCustomerContact').innerText = data.customer_contact;
+            document.getElementById('modalOrderMode').innerText = data.order_mode;
         });
 }
 
