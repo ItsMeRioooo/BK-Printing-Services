@@ -1,24 +1,92 @@
+document.addEventListener('DOMContentLoaded', function() {
+    const scheduleFileDropArea = document.getElementById('scheduleFileDropArea');
+    const scheduleFileInput = document.getElementById('scheduleFile');
+    const scheduleFileList = document.getElementById('scheduleFileList');
+    const printFileDropArea = document.getElementById('printFileDropArea');
+    const printFileInput = document.getElementById('printFile');
+    const printFileList = document.getElementById('printFileList');
+
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    function highlight(e) {
+        e.currentTarget.classList.add('highlight');
+    }
+
+    function unhighlight(e) {
+        e.currentTarget.classList.remove('highlight');
+    }
+
+    function handleDrop(e, input, fileList) {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        if (files.length > 1) {
+            alert('Please upload only one file.');
+            return;
+        }
+        input.files = files;
+        updateFileList(files, fileList);
+    }
+
+    function updateFileList(files, fileList) {
+        fileList.innerHTML = '';
+        if (files.length > 0) {
+            const file = files[0];
+            const fileItem = document.createElement('p');
+            fileItem.textContent = file.name;
+            fileList.appendChild(fileItem);
+        }
+    }
+
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        scheduleFileDropArea.addEventListener(eventName, preventDefaults, false);
+        printFileDropArea.addEventListener(eventName, preventDefaults, false);
+    });
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+        scheduleFileDropArea.addEventListener(eventName, highlight, false);
+        printFileDropArea.addEventListener(eventName, highlight, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+        scheduleFileDropArea.addEventListener(eventName, unhighlight, false);
+        printFileDropArea.addEventListener(eventName, unhighlight, false);
+    });
+
+    scheduleFileDropArea.addEventListener('drop', e => handleDrop(e, scheduleFileInput, scheduleFileList), false);
+    printFileDropArea.addEventListener('drop', e => handleDrop(e, printFileInput, printFileList), false);
+
+    scheduleFileDropArea.addEventListener('click', () => scheduleFileInput.click());
+    printFileDropArea.addEventListener('click', () => printFileInput.click());
+
+    scheduleFileInput.addEventListener('change', () => updateFileList(scheduleFileInput.files, scheduleFileList));
+    printFileInput.addEventListener('change', () => updateFileList(printFileInput.files, printFileList));
+});
+
 function openServiceModal(serviceId) {
     document.getElementById('modalServiceId').innerText = serviceId;
-	document.getElementById('serviceModal').style.display = 'block';
-	fetch(`/service/${serviceId}`)
-		.then(response => response.json())
-		.then(data => {
-			document.getElementById('modalServiceName').innerText = data.service_name;
-			document.getElementById('modalServiceDescription').innerText = data.service_description;
-			document.getElementById('modalServiceImage').src = data.service_img;
-			document.getElementById('modalServicePrice').innerText = data.service_price + " PHP";
-		});
+    document.getElementById('serviceModal').style.display = 'block';
+    fetch(`/service/${serviceId}`)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('modalServiceName').innerText = data.service_name;
+            document.getElementById('modalServiceDescription').innerText = data.service_description;
+            document.getElementById('modalServiceImage').src = data.service_img;
+            document.getElementById('modalServicePrice').innerText = data.service_price + " PHP";
+        });
 }
+
 function closeServiceModal() {
     document.getElementById('serviceModal').style.display = 'none';
 }
-
 
 function openScheduleModal() {
     document.getElementById('scheduleModal').style.display = 'block';
     document.getElementById('serviceModal').style.display = 'none';
 }
+
 function closeScheduleModal() {
     document.getElementById('scheduleModal').style.display = 'none';
     document.getElementById('serviceModal').style.display = 'block';
@@ -28,8 +96,9 @@ function openPrintModal() {
     document.getElementById('printModal').style.display = 'block';
     document.getElementById('serviceModal').style.display = 'none';
 }
-function closeScheduleModal() {
-    document.getElementById('scheduleModal').style.display = 'none';
+
+function closePrintModal() {
+    document.getElementById('printModal').style.display = 'none';
     document.getElementById('serviceModal').style.display = 'block';
 }
 
@@ -41,7 +110,16 @@ function scheduleReceiptModal() {
 function closeScheduleReceipt() {
     document.getElementById('scheduleReceiptModal').style.display = 'none';
     location.reload();
+}
 
+function openPrintReceipt() {
+    document.getElementById('printReceiptModal').style.display = 'block';
+    document.getElementById('printModal').style.display = 'none';
+}
+
+function closePrintReceipt() {
+    document.getElementById('printReceiptModal').style.display = 'none';
+    location.reload();
 }
 
 document.addEventListener('keydown', function(event) {
@@ -52,13 +130,12 @@ document.addEventListener('keydown', function(event) {
         }
         if (document.getElementById('scheduleReceiptModal').style.display == 'block') {
             closeScheduleReceipt();
-        }d
+        }
         if (document.getElementById('printReceiptModal').style.display == 'block') {
             closePrintReceipt();
         }
     }
 });
-
 
 function scheduleService(event) { 
     event.preventDefault(); 
@@ -139,14 +216,4 @@ function printService(event) {
     .catch(error => {
         console.error('Error:', error);
     });
-}
-
-function openPrintReceipt() {
-    document.getElementById('printReceiptModal').style.display = 'block';
-    document.getElementById('printModal').style.display = 'none';
-}
-
-function closePrintReceipt() {
-    document.getElementById('printReceiptModal').style.display = 'none';
-    location.reload();
 }

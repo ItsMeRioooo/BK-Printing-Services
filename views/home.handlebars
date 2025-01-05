@@ -43,59 +43,65 @@
 	</div>
 
 	<div class="modal" id="scheduleModal">
-		<div class="modal_container">
-			<div class="modal_content">
-				<div class="close_btn">
-					<i class='bx bx-x-circle' onclick="closeScheduleModal()"></i>
-				</div>
-				<h3>Schedule</h3>
-				<form class="schedule_form" onsubmit="scheduleService(event)">
-					<label for="scheduleName">Name:</label><br>
-					<input type="text" id="scheduleName" required>
-					<br><br>
-					<label for="scheduleEmailOrNumber">Email or Number:</label><br>
-					<input type="text" id="scheduleEmailOrNumber" required>
-					<br><br>
-					<label for="scheduleDate">Date:</label><br>
-					<input type="date" id="scheduleDate" required>
-					<br><br>
-					<label for="scheduleMessage">Message:</label><br>
-					<textarea id="scheduleMessage" placeholder="Optional"></textarea>
-					<br><br>
-					<label for="scheduleFile">Upload File:</label><br>
-					<input type="file" id="scheduleFile" placeholder="Upload File" required>
-					<br><br>
-					<div class="button_container">
-						<button class="schedule_btn" type="submit">Confirm</button>
-					</div>
-				</form>
-			</div>
-		</div>
+	    <div class="modal_container">
+	        <div class="modal_content">
+	            <div class="close_btn">
+	                <i class='bx bx-x-circle' onclick="closeScheduleModal()"></i>
+	            </div>
+	            <h3>Schedule</h3>
+	            <form class="schedule_form" onsubmit="scheduleService(event)">
+	                <label for="scheduleName">Name:</label><br>
+	                <input type="text" id="scheduleName" required>
+	                <br><br>
+	                <label for="scheduleEmailOrNumber">Email or Number:</label><br>
+	                <input type="text" id="scheduleEmailOrNumber" required>
+	                <br><br>
+	                <label for="scheduleDate">Date:</label><br>
+	                <input type="date" id="scheduleDate" required>
+	                <br><br>
+	                <label for="scheduleMessage">Message:</label><br>
+	                <textarea id="scheduleMessage" placeholder="Optional"></textarea>
+	                <br><br>
+	                <label for="scheduleFile">Upload File:</label><br>
+	                <div id="scheduleFileDropArea" class="file-drop-area">
+	                    <input type="file" id="scheduleFile" class="file-input" required>
+	                    <p>Drag & drop a file here or click to select a file</p>
+	                    <div id="scheduleFileList" class="file-list"></div>
+	                </div>
+	                <br><br>
+	                <div class="button_container">
+	                    <button class="schedule_btn" type="submit">Confirm</button>
+	                </div>
+	            </form>
+	        </div>
+	    </div>
 	</div>
 
-{{!-- not working yet --}}
 	<div class="modal" id="printModal">
-		<div class="modal_container">
-			<div class="modal_content">
-				<div class="close_btn">
-					<i class='bx bx-x-circle' onclick="closePrintModal()"></i>
-				</div>
-				<h3>Print</h3>
-				<form class="print_form" onsubmit="printService(event)">
-					<label for="printName">Name:</label><br>
-					<input type="text" id="printName" required>
-					<br><br>
-					<label for="printFile">Upload File:</label><br>
-					<input type="file" id="printFile" placeholder="Upload File" required>
-					<br><br>
-					<div class="button_container">
-						<button class="print_btn" type="submit">Confirm</button>
-					</div>
-				</form>
-			</div>
-		</div>
+	    <div class="modal_container">
+	        <div class="modal_content">
+	            <div class="close_btn">
+	                <i class='bx bx-x-circle' onclick="closePrintModal()"></i>
+	            </div>
+	            <h3>Print</h3>
+	            <form class="print_form" onsubmit="printService(event)">
+	                <label for="printName">Name:</label><br>
+	                <input type="text" id="printName" required>
+	                <br><br>
+	                <label for="printFile">Upload File:</label><br>
+	                <div id="printFileDropArea" class="file-drop-area">
+	                    <input type="file" id="printFile" class="file-input" required>
+	                    <p>Drag & drop a file here or click to select a file</p>
+	                    <div id="printFileList" class="file-list"></div>
+	                </div>
+	                <br><br>
+	                <div class="button_container">
+	                    <button class="print_btn" type="submit">Confirm</button>
+	                </div>
+	            </form>
+	        </div>
+	    </div>
 	</div>
-
 
 	<div class="modal" id="scheduleReceiptModal">
 	    <div class="modal_container">
@@ -126,6 +132,6 @@
 	            <p><strong>Contact:</strong> <span id="printReceiptDate"></span></p>
 	        </div>
 	    </div>
-
+	</div>
 </div>
 <script src="js/home.js"></script>
